@@ -1,0 +1,76 @@
+/* Google Font Import Link */
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: "Ubuntu", sans-serif;
+}
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 20px;
+    transition: all 0.4s ease;
+    background-color: #F3EDC8; /* Warna biru untuk navbar */
+    color: #7D0A0A; /* Warna teks putih */
+    z-index: 1000; /* Z-index tinggi untuk menempatkan navbar di atas konten lain */
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav.sticky {
+    padding: 15px 20px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+nav .nav-content {
+    height: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+nav .logo img{
+    height: 70px;
+}
+nav.sticky .logo a {
+    color: #7D0A0A;
+}
+.nav-content .nav-links {
+    padding-top: 20px;
+    display: flex;
+    list-style: none; /* Menghapus bullet points dari daftar menu */
+    align-items: center;
+}
+
+.nav-content .nav-links li {
+    margin: 0 8px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #7D0A0A; /* Warna teks putih */
+    font-size: 18px;
+    font-weight: 500;
+    padding: 10px 4px;
+    transition: all 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #fff; /* Warna teks putih ketika dihover */
+    background-color: rgba(255, 255, 255, 0.1); /* Warna latar belakang transparan ketika dihover */
+}
+
+nav.sticky .nav-links li a {
+    color: #7D0A0A; /* Warna teks putih */
+    transition: all 0.4s ease;
+}
+
+nav.sticky .nav-links li a:hover {
+    color: #fff; /* Warna teks putih ketika dihover */
+    background-color: rgba(255, 255, 255, 0.1); /* Warna latar belakang transparan ketika dihover */
+}
