@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="assets/css/homePage.css" type="text/css">
     <link rel="stylesheet" href="assets/css/all.css" type="text/css">
     <link rel="stylesheet" href="assets/css/login.css" type="text/css">
+    
+    <link rel="stylesheet" href="assets/css/footer.css" type="text/css">
 
 </head>
 
@@ -35,7 +37,7 @@
     </section>
     <!-- /Banners -->
     <!--Footer -->
-    {{-- @include('includes/footer') --}}
+    @include('layouts\footer')
     <!-- /Footer-->
 
     <!--Back to top-->

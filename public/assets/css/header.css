@@ -13,7 +13,7 @@ nav {
     left: 0;
     right: 0;
     width: 100%;
-    padding: 20px;
+    padding: 5px;
     transition: all 0.4s ease;
     background-color: #F3EDC8; /* Warna biru untuk navbar */
     color: #7D0A0A; /* Warna teks putih */
@@ -35,7 +35,8 @@ nav .nav-content {
     justify-content: space-between;
 }
 nav .logo img{
-    height: 70px;
+    height: 50px;
+    margin-top: 40px;
 }
 nav.sticky .logo a {
     color: #7D0A0A;
@@ -53,7 +54,7 @@ nav.sticky .logo a {
 
 .nav-links li a {
     text-decoration: none;
-    color: #7D0A0A; /* Warna teks putih */
+    color: #ffffff; /* Warna teks putih */
     font-size: 18px;
     font-weight: 500;
     padding: 10px 4px;
@@ -66,11 +67,20 @@ nav.sticky .logo a {
 }
 
 nav.sticky .nav-links li a {
-    color: #7D0A0A; /* Warna teks putih */
+    color: #eeeeee; /* Warna teks putih */
     transition: all 0.4s ease;
 }
 
 nav.sticky .nav-links li a:hover {
     color: #fff; /* Warna teks putih ketika dihover */
     background-color: rgba(255, 255, 255, 0.1); /* Warna latar belakang transparan ketika dihover */
+}
+
+/* ubah tombol login */
+.tombolLogin {
+    color: #7D0A0A; 
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: all 0.3s ease;
 }

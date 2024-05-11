@@ -1,0 +1,52 @@
+body{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #f3edc8;
+}
+footer{
+  margin-top: auto;
+  width: 100%;
+  background: #f3edc8;
+  padding: 30px 0 30px;
+  border-top-left-radius: 125;
+  font-size: 13px;
+  line-height: 20px;
+  transition: all 0.4s ease;
+}
+.row{
+  width: 85%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.col{
+  flex-basis: 25%;
+  padding: 10px;
+}
+.logo{
+  width: 80px;
+  margin-bottom: 30px;
+}
+
+.mini-navfooter {
+  width: 356px;
+  height: 115px;
+  position: static;
+}
+
+.judul1 {
+  color: #000000;
+  font-family: "Inter-SemiBold", sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+}
+.isian1{
+  color: #afb1b6;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+}
