@@ -1,3 +1,976 @@
-.container-dashboard {
+/* .container-dashboard {
     background-color: #EAD196;
+} */
+
+.my-account-page-profile-page-personal-info,
+.my-account-page-profile-page-personal-info * {
+  box-sizing: border-box;
+}
+.my-account-page-profile-page-personal-info {
+  background: #ead196;
+  height: 1330px;
+  position: relative;
+  overflow-y: auto;
+}
+.profile {
+  position: absolute;
+  inset: 0;
+}
+.kotak-personal-info {
+  background: #f3edc8;
+  border-radius: 23px;
+  width: 1383px;
+  height: 934px;
+  position: absolute;
+  left: 490px;
+  top: 186px;
+}
+.data-sim {
+  width: 901px;
+  height: 156px;
+  position: static;
+}
+.medical-conditions {
+  width: 887px;
+  height: 29px;
+  position: static;
+}
+.medical-conditions-optional {
+  text-align: left;
+  position: absolute;
+  left: 923px;
+  top: 746px;
+}
+.medical-conditions-optional-span {
+  color: #262626;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+.medical-conditions-optional-span2 {
+  color: #afb1b6;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+.data-kesehatan {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1593px;
+  top: 746px;
+}
+.add-conditions {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 746px;
+}
+.insurance {
+  width: 876px;
+  height: 29px;
+  position: static;
+}
+.personal-insurance-optional {
+  text-align: left;
+  position: absolute;
+  left: 923px;
+  top: 708px;
+}
+.personal-insurance-optional-span {
+  color: #262626;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+.personal-insurance-optional-span2 {
+  color: #afb1b6;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+}
+.data-bpjs {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1593px;
+  top: 708px;
+}
+.add-insurance {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 708px;
+}
+.driving-license {
+  width: 880px;
+  height: 29px;
+  position: static;
+}
+.driving-license-id {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 923px;
+  top: 670px;
+}
+.data-s-im {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1593px;
+  top: 670px;
+}
+.edit-license-id {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 670px;
+}
+.user-legal-related-driving-requirements {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 909px;
+  top: 619px;
+  width: 486px;
+  height: 30px;
+}
+.garis-personal-info {
+  width: 1384px;
+  height: 0px;
+  position: absolute;
+  left: 490px;
+  top: 282px;
+  transform: translate(0px, -2px);
+  overflow: visible;
+}
+.personal-info {
+  color: #7d0a0a;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 32px;
+  font-weight: 400;
+  position: absolute;
+  left: 1083px;
+  top: 213px;
+  -webkit-text-stroke: 1px #7d0a0a;
+}
+.ppicture {
+  width: 350px;
+  height: 478px;
+  position: static;
+}
+.boxp-picture {
+  background: #ffffff;
+  border-radius: 15px;
+  width: 350px;
+  height: 441px;
+  position: absolute;
+  left: 523px;
+  top: 336px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.25);
+}
+.edit-profile-picture {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 523px;
+  top: 299px;
+  width: 328.57px;
+  height: 30px;
+}
+.buttonp-picture {
+  background: #0066dd;
+  border-radius: 8px;
+  padding: 12px 36px 12px 36px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 50px;
+  position: absolute;
+  left: 578px;
+  top: 687px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.button {
+  color: var(--texticon-primary-white, #ffffff);
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 20px;
+  line-height: 24px;
+  font-weight: 500;
+  position: relative;
+}
+.lingkaran-pp {
+  border-radius: 50%;
+  border-style: solid;
+  border-color: var(--primary-700, #175cd3);
+  border-width: 0.68px;
+  width: 13.65%;
+  height: 20.32%;
+  position: absolute;
+  right: 56.82%;
+  left: 29.53%;
+  bottom: 51.79%;
+  top: 27.89%;
+}
+.personal-info2 {
+  width: 891px;
+  height: 270px;
+  position: static;
+}
+.mobile {
+  width: 839px;
+  height: 29px;
+  position: static;
+}
+.mobile2 {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 923px;
+  top: 426px;
+}
+._628910929841241 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1377px;
+  top: 426px;
+}
+.edit-mobile {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 426px;
+}
+.birth-date {
+  width: 877px;
+  height: 29px;
+  position: static;
+}
+.birth-date2 {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 923px;
+  top: 464px;
+}
+._12-may-1991 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1465px;
+  top: 464px;
+}
+.edit-birth-date {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 464px;
+}
+.gender {
+  width: 847px;
+  height: 29px;
+  position: static;
+}
+.gender2 {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 923px;
+  top: 502px;
+}
+.male {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1550px;
+  top: 502px;
+}
+.edit-gender {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 502px;
+}
+.email {
+  width: 823px;
+  height: 29px;
+  position: static;
+}
+.email2 {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 923px;
+  top: 388px;
+}
+.loremipsum-gmail-com {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1335px;
+  top: 388px;
+}
+.edit-email {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 388px;
+}
+.name {
+  width: 829px;
+  height: 29px;
+  position: static;
+}
+.name2 {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 923px;
+  top: 350px;
+}
+.lorem-ipsum {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1458px;
+  top: 350px;
+}
+.edit-name {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 350px;
+}
+.user-personal-info {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 909px;
+  top: 299px;
+  width: 253px;
+  height: 30px;
+}
+.gender3 {
+  width: 860px;
+  height: 29px;
+  position: static;
+}
+.domicile {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 923px;
+  top: 540px;
+}
+.jakarta {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1520px;
+  top: 540px;
+}
+.edit-domicile {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 1635px;
+  top: 540px;
+}
+.other {
+  position: absolute;
+  inset: 0;
+}
+.ganti-bahasa {
+  width: 483px;
+  height: 37px;
+  position: static;
+}
+.change-language {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 542px;
+  top: 1037px;
+}
+.tombol-ganti-bahasa {
+  background: #0066dd;
+  border-radius: 8px;
+  padding: 12px 36px 12px 36px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 37px;
+  position: absolute;
+  left: 785px;
+  top: 1033px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.button2 {
+  color: var(--texticon-primary-white, #ffffff);
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  position: relative;
+}
+.gamti-pass {
+  width: 483px;
+  height: 37px;
+  position: static;
+}
+.change-password {
+  color: #262626;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  position: absolute;
+  left: 542px;
+  top: 980px;
+}
+.tombol-ganti-pass {
+  background: #0066dd;
+  border-radius: 8px;
+  padding: 12px 36px 12px 36px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 240px;
+  height: 37px;
+  position: absolute;
+  left: 785px;
+  top: 976px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.other2 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 528px;
+  top: 929px;
+  width: 486px;
+  height: 30px;
+}
+.profilesamping {
+  position: absolute;
+  inset: 0;
+}
+.boxprofilesamping {
+  background: #f3edc8;
+  border-radius: 23px;
+  width: 425px;
+  height: 934px;
+  position: absolute;
+  left: 36px;
+  top: 186px;
+}
+.boxlogout {
+  background: #f3edc8;
+  border-radius: 23px;
+  width: 425px;
+  height: 110px;
+  position: absolute;
+  left: 36px;
+  top: 1151px;
+}
+.logout {
+  width: 385px;
+  height: 64.11px;
+  position: static;
+}
+.button3 {
+  background: #e52828;
+  border-radius: 8px;
+  padding: 12px 36px 12px 36px;
+  display: flex;
+  flex-direction: row;
+  gap: 0px;
+  align-items: center;
+  justify-content: center;
+  width: 385px;
+  height: 60px;
+  position: absolute;
+  left: 56px;
+  top: 1176px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.vector {
+  width: 0.83%;
+  height: 1.23%;
+  position: absolute;
+  right: 89.27%;
+  left: 9.9%;
+  bottom: 6.76%;
+  top: 92.01%;
+  overflow: visible;
+}
+.favorite {
+  width: 385px;
+  height: 122px;
+  position: static;
+}
+.boxfavorite {
+  background: #ffffff;
+  border-radius: 15px;
+  width: 385px;
+  height: 85px;
+  position: absolute;
+  left: 56px;
+  top: 783px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.25);
+}
+.wishlist-car {
+  width: 357px;
+  height: 24px;
+  position: static;
+}
+.wishlist-car2 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 832px;
+}
+._0-added {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 346px;
+  top: 832px;
+}
+.fav-car {
+  width: 357px;
+  height: 24px;
+  position: static;
+}
+.favorite-car {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 797px;
+}
+._0-added2 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 346px;
+  top: 797px;
+}
+.favorite-and-wishlist {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 56px;
+  top: 746px;
+  width: 279px;
+  height: 30px;
+}
+.help {
+  width: 385px;
+  height: 122px;
+  position: static;
+}
+.boxhelp {
+  background: #ffffff;
+  border-radius: 15px;
+  width: 385px;
+  height: 85px;
+  position: absolute;
+  left: 56px;
+  top: 958px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.25);
+}
+.faq {
+  width: 153px;
+  height: 24px;
+  position: static;
+}
+.check-our-faq-s {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: underline;
+  position: absolute;
+  left: 70px;
+  top: 1007px;
+}
+.support {
+  width: 331px;
+  height: 24px;
+  position: static;
+}
+.request-assistance-from-our-staff {
+  color: #0066dd;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: underline;
+  position: absolute;
+  left: 70px;
+  top: 972px;
+}
+.need-any-help {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 56px;
+  top: 921px;
+  width: 279px;
+  height: 30px;
+}
+.pembayaran {
+  width: 385px;
+  height: 162px;
+  position: static;
+}
+.boxpayment {
+  background: #ffffff;
+  border-radius: 15px;
+  width: 385px;
+  height: 125px;
+  position: absolute;
+  left: 56px;
+  top: 568px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.25);
+}
+.complain {
+  width: 357px;
+  height: 24px;
+  position: static;
+}
+.invoices {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 652px;
+}
+._0-available {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 325px;
+  top: 652px;
+}
+.opsi-pembayaran {
+  width: 357px;
+  height: 29px;
+  position: static;
+}
+.payment-options {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 617px;
+}
+._0-options {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 335px;
+  top: 612px;
+}
+.expenses {
+  width: 357px;
+  height: 24px;
+  position: static;
+}
+.total-expenses {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 582px;
+}
+.rp-0 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 389px;
+  top: 582px;
+}
+.payment-and-invoices {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 56px;
+  top: 531px;
+  width: 253px;
+  height: 30px;
+}
+.history {
+  width: 385px;
+  height: 162px;
+  position: static;
+}
+.history2 {
+  background: #ffffff;
+  border-radius: 15px;
+  width: 385px;
+  height: 125px;
+  position: absolute;
+  left: 56px;
+  top: 353px;
+  box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.25);
+}
+.trips-complain {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 437px;
+}
+._0 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 414px;
+  top: 437px;
+}
+.review {
+  width: 357px;
+  height: 24px;
+  position: static;
+}
+.trips-review {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 402px;
+}
+._02 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 414px;
+  top: 402px;
+}
+.tripdone {
+  width: 357px;
+  height: 24px;
+  position: static;
+}
+.trips-done {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 70px;
+  top: 367px;
+}
+._03 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Regular", sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 414px;
+  top: 367px;
+}
+.transaction-history {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  position: absolute;
+  left: 56px;
+  top: 316px;
+  width: 253px;
+  height: 30px;
+}
+.username {
+  width: 425px;
+  height: 71px;
+  position: static;
+}
+.username2 {
+  color: #000000;
+  text-align: left;
+  font-family: "Inter-Medium", sans-serif;
+  font-size: 36px;
+  font-weight: 500;
+  position: absolute;
+  left: 151px;
+  top: 212px;
+}
+.garisprofilesamping {
+  width: 425px;
+  height: 0px;
+  position: absolute;
+  left: 36px;
+  top: 283px;
+  transform: translate(0px, -2px);
+  overflow: visible;
 }

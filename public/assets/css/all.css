@@ -272,16 +272,19 @@ a,
 .header_style2 .dropdown-menu > .active > a:focus,
 .header_style2 .dropdown-menu > .active > a:hover,
 .header_style2 .dropdown-menu > li > a:focus,
+
 .header_style2 .dropdown-menu > li > a:hover {
-    color: #fa2837;
-    fill: #fa2837;
+    text-decoration: none;
+    font-family: "Ubuntu", sans-serif;
+    color: #7D0A0A;
+    fill: #7D0A0A;
 }
 
 a:hover,
 a:focus,
 .btn-link:hover {
-    color: #ff0012;
-    fill: #ff0012;
+    color: #7D0A0A;
+    fill: #7D0A0A;
 }
 
 .btn,
