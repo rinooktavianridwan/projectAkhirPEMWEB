@@ -1,4 +1,34 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Navigation Bar</title>
+    <style>
+        /* Background color for the navigation */
+        nav {
+            background-color: #F3EDC8; /* Light beige background */
+        }
+
+        /* Font color for navigation links */
+        .text-gray-800, .text-gray-500 {
+            color: #7D0A0A; /* Deep red font color */
+        }
+
+        /* Hover states for buttons and links */
+        .hover\:text-gray-700:hover, .hover\:bg-gray-100:hover, .hover\:text-gray-500:hover {
+            color: #a24f4f; /* Darker red on hover */
+            background-color: #ffffff; /* White background on hover */
+        }
+
+        /* Override other hover styles specifically */
+        .text-gray-400:hover {
+            color: #a24f4f; /* Consistent hover color for all text */
+        }
+    </style>
+</head>
+<body>
+<nav x-data="{ open: false }" class="border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -6,7 +36,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <x-application-logo class="block h-9 w-auto fill-current" />
                     </a>
                 </div>
 
@@ -77,7 +107,7 @@
                         <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                </button>
+                </button
             </div>
         </div>
     </div>
@@ -108,12 +138,15 @@
 
                     <x-responsive-nav-link :href="route('logout')"
                         onclick="event.preventDefault();
-                                        this.closest('form').submit();">
+                                this.closest('form').submit();">
                         {{ __('Log Out') }}
-                    </x-responsive-nav-link>
+                    </x-responsive-nav-link> <!-- Ensure this is closed if it's supposed to be self-closing or ensure enclosing tags are correct -->
+                    </form>
+
                 </form>
             </div>
         </div>
     </div>
 </nav>
-
+</body>
+</html>
