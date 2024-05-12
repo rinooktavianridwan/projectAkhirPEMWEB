@@ -20,10 +20,11 @@
     <title>Document</title>
 </head>
 
-<body class="font-sans antialiased">
+<body class="font-sans antialiased" style="background-color: #F3EDC8;">
+    
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
-        <header class="bg-white shadow">
+        <!-- <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                 <div name="header">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -31,7 +32,7 @@
                     </h2>
                 </div>
             </div>
-        </header>
+        </header> -->
 
         <!-- Page Content -->
         <main class="container-dashboard">

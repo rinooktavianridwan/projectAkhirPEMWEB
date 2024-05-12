@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:400,400i,700,700i');
 .cars-container {
-    background-image: url('/images/logo.svg');
+    background-image: url('/images/logo.svg') ;
+    /* opacity 60% background */
+    background-color: #F3EDC8;
+    background-blend-mode: overlay;
+    background-size: 100%;
     background-position: center; /* Mengatur posisi gambar latar belakang ke tengah */
     background-size: contain; /* Mengatur ukuran gambar agar sesuai tapi tetap proporsional */
     background-repeat: no-repeat; /* Mencegah gambar latar belakang untuk berulang */
@@ -15,11 +19,8 @@
     padding-bottom: 250px;
 }
 
-
-
-body{
-  font-family: 'Muli', sans-serif;
-  background:#ddd;
+body {
+  background-color: #F3EDC8 !important;
 }
 .shell{
   padding:80px 0;
