@@ -4,7 +4,11 @@
             <div class="logo">
                 <img src="{{ asset('images/logo.svg') }}" alt="Background Image">
             </div>
-            <div class="homepage">Homepage</div>
+            <div class="homepage">
+                <a href="{{ url('/') }}">
+                    Homepage
+                </a>
+            </div>
             <div class="about-us">About Us</div>
             <div class="cars">Cars</div>
             <div class="my-account">
