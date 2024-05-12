@@ -8,12 +8,12 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <link rel="stylesheet" href="assets/css/dashboard.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/header.css" type="text/css">
     <link rel="stylesheet" href="assets/css/all.css" type="text/css">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('layouts.navigation')
     
 </head>
 <body>
-    @include('layouts/Guest/headerGuest')
     
     <div class="my-account-page-profile-page-personal-info">
   <div class="kotak-personal-info"></div>
