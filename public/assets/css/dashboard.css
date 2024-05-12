@@ -4,24 +4,27 @@
 }
 .my-account-page-profile-page-personal-info {
   background: #ead196;
-  width: 1000vw;
-  height: 1000vh;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 100vh; /* Atur tinggi container agar sesuai dengan tinggi viewport */
+  padding: 0 10px; /* Tambahkan padding di kiri dan kanan jika diperlukan */
 }
 .boxSamping {
   background: #f3edc8;
   border-radius: 23px;
-  width: 425px;
-  height: 934px;
-  position: absolute;
-  left: 36px;
-  top: 186px;
+  width: 15%;
+  height: 90%;
+  margin-right: 10px; /* Atur jarak antara boxSamping dengan boxTengah */
+  max-height: 98vh; /* Atur tinggi maksimal boxTengah agar tidak melebihi tinggi viewport */
+
 }
 .boxTengah {
   background: #f3edc8;
   border-radius: 23px;
-  width: 1383px;
-  height: 934px;
-  position: absolute;
-  left: 490px;
-  top: 186px;
+  width: 80%;
+  height: 90%;
+  margin-left: 10px; /* Atur jarak antara boxTengah dengan boxSamping */
+  max-height: 98vh; /* Atur tinggi maksimal boxTengah agar tidak melebihi tinggi viewport */
+
 }

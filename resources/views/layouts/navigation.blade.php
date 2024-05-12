@@ -36,7 +36,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <img src="/images/logonya.png" alt="Logo" class="block h-9 w-auto">
+                        <img src="/images/logonya.png" alt="Logo" class="block h-20 w-20">
                     </a>
                 </div>
 
@@ -113,7 +113,6 @@
                     </x-dropdown>
                 </div>
             @endif
-
         </div>
     </div>
 </nav>
