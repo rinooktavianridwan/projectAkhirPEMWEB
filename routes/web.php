@@ -15,6 +15,10 @@ Route::get('/cars', function () {
     return view('layouts.cars');
 })->middleware(['auth', 'verified'])->name('cars');
 
+Route::get('/admin', function () {
+    return view('admin.admin');
+})->middleware(['auth', 'verified'])->name('admin');
+
 Route::get('/aboutUs', function () {
     return view('layouts.aboutUs');
 })->middleware(['auth', 'verified'])->name('aboutUs');
