@@ -20,9 +20,9 @@
     <title>Document</title>
 </head>
 
-<body class="font-sans antialiased" style="background-color: #F3EDC8;">
+<body class="font-sans antialiased" >
     
-    <div class="min-h-screen bg-gray-100">
+    <div class="min-h-screen bg-gray-100" style="background-color: #ead196;">
         @include('layouts.navigation')
         <!-- <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -36,9 +36,9 @@
 
         <!-- Page Content -->
         <main class="container-dashboard">
-            <div class="py-12">
+            <div class="py-12 " >
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 ">
                         <div class="tombolLogin">
                             @if (Route::has('admin'))
                                 <a href="{{ url('/admin') }}">
