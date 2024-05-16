@@ -137,10 +137,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
-            let cars = JSON.parse(sessionStorage.getItem('cars')) || [];
-
             // Function to update table
-            function updateTable() {
+            function updateTable(cars) {
                 let tableBody = $('#carsTable tbody');
                 tableBody.empty();
                 $.each(cars, function(index, car) {
@@ -151,7 +149,7 @@
                         <td>${car.image}</td>
                         <td>${car.city}</td>
                         <td>${car.status}</td>
-                        <td>${car.orderName}</td>
+                        <td>${car.transaction_id}</td>
                         <td>${car.price}</td>
                         <td>
                             <button class="btn btn-info" onclick="viewCar(${index})">View</button>
@@ -160,12 +158,22 @@
                         </td>
                     </tr>`);
                 });
-                sessionStorage.setItem('cars', JSON.stringify(cars));
             }
+
+            // Fetch cars from server
+            // View Car Function
+            window.viewCar = function(index) {
+                $.ajax({
+                    url: '/get-car/' + index,
+                    method: 'GET',
+                    success: function(car) {
+                        alert(`Name: ${car.name}\nCategory: ${car.category}\nImage: ${car.image}\nCity: ${car.city}\nStatus: ${car.status}\nTransaction ID: ${car.transaction_id}\nPrice: ${car.price}`);
+                    }
+                });
+            };
 
             // Add Car Function
             $('#addButton').click(function() {
-                $('#carForm')[0].reset();
                 $('#carModal').modal('show');
                 $('#saveButton').off('click').on('click', function() {
                     let newCar = {
@@ -177,9 +185,15 @@
                         orderName: $('#orderName').val(),
                         price: $('#price').val()
                     };
-                    cars.push(newCar);
-                    updateTable();
-                    $('#carModal').modal('hide');
+                    $.ajax({
+                        url: '/add-car',
+                        method: 'POST',
+                        data: newCar,
+                        success: function(data) {
+                            updateTable(data);
+                            $('#carModal').modal('hide');
+                        }
+                    });
                 });
             });
 
@@ -195,7 +209,7 @@
                 $('#price').val(car.price);
                 $('#carModal').modal('show');
                 $('#saveButton').off('click').on('click', function() {
-                    cars[index] = {
+                    let updatedCar = {
                         name: $('#name').val(),
                         category: $('#category').val(),
                         image: $('#image').val(),
@@ -204,18 +218,28 @@
                         orderName: $('#orderName').val(),
                         price: $('#price').val()
                     };
-                    updateTable();
-                    $('#carModal').modal('hide');
+                    $.ajax({
+                        url: '/update-car/' + index,
+                        method: 'PUT',
+                        data: updatedCar,
+                        success: function(data) {
+                            updateTable(data);
+                            $('#carModal').modal('hide');
+                        }
+                    });
                 });
             };
 
             // Delete Car Function
             window.deleteCar = function(index) {
-                cars.splice(index, 1);
-                updateTable();
+                $.ajax({
+                    url: '/delete-car/' + index,
+                    method: 'DELETE',
+                    success: function(data) {
+                        updateTable(data);
+                    }
+                });
             };
-
-            updateTable();
         });
     </script>
 </body>
