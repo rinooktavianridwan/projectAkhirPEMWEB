@@ -18,6 +18,11 @@ class ProfileUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'phone' => ['required', 'string', 'max:15'], // adjust validation rules as needed
+            'address' => ['required', 'string', 'max:255'], // adjust validation rules as needed
+            'city' => ['required', 'string', 'max:255'], // adjust validation rules as needed
+            'country' => ['required', 'string', 'max:255'], // adjust validation rules as needed
+            'postal_code' => ['required', 'string', 'max:10'], // adjust validation rules as needed
         ];
     }
 }

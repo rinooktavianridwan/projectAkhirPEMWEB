@@ -17,6 +17,7 @@
   height: 90%;
   margin-right: 10px; /* Atur jarak antara boxSamping dengan boxTengah */
   max-height: 98vh; /* Atur tinggi maksimal boxTengah agar tidak melebihi tinggi viewport */
+  box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.3);
 
 }
 .boxTengah {
@@ -26,5 +27,5 @@
   height: 90%;
   margin-left: 10px; /* Atur jarak antara boxTengah dengan boxSamping */
   max-height: 98vh; /* Atur tinggi maksimal boxTengah agar tidak melebihi tinggi viewport */
-
+  box-shadow: 0 0 0.5vw 0.1vw rgba(0, 0, 0, 0.3);
 }
