@@ -24,27 +24,31 @@
     
     <div class="min-h-screen bg-gray-100">
         @include('layouts.navigation')
-        <!-- <header class="bg-white shadow">
-            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <div name="header">
-                    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                        {{ __('Cars') }}
-                    </h2>
-                </div>
-            </div>
-        </header> -->
 
         <!-- Page Content -->
         <main class="container-dashboard">
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        <div class="tombolLogin">
+                        <div class="searching-cars">
                             @if (Route::has('admin'))
                                 <a href="{{ url('/admin') }}">
                                     Admin
                                 </a>
                             @endif
+                            <div class="search">
+                                <form action="/search" method="GET">
+                                    <select name="search_type">
+                                        <option value="" disabled selected>Pilih Kota</option>
+                                        <!-- Tambahkan opsi kota di sini -->
+                                    </select>
+                                    <select name="search_type">
+                                        <option value="" disabled selected>Pilih Kategori</option>
+                                        <!-- Tambahkan opsi kategori di sini -->
+                                    </select>
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>                            
                         </div>
                         <div class="cars-container">
                             <div class="shell">
