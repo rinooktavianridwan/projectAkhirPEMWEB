@@ -29,13 +29,10 @@
         <main class="container-dashboard">
             <div class="py-12 " >
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
-<<<<<<< HEAD
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                         <div class="searching-cars">
-=======
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 ">
                         <div class="tombolLogin">
->>>>>>> 4c8af8b48c90499d804ebc31369d88ad64bfa21b
                             @if (Route::has('admin'))
                                 <a href="{{ url('/admin') }}">
                                     Admin

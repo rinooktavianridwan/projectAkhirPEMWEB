@@ -12,6 +12,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/dashboard.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/aboutUs.css" type="text/css">
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,7 +36,22 @@
             <div class="py-12">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-                        {{ __("About Us Page") }}
+                        <section id="aboutUs">
+                            <img src="{{ asset('images/logo.svg') }}" alt="computer user">
+                            <div class="content">
+                                <h2>About Us</h2>
+                                <h4> Developer & Designer </h4>
+                                <p class="description">
+                                    I am a Front-end web developer. I can provide clean code and pixel perfect design. I
+                                    also make the
+                                    website more & more interactive with web animations. I can provide clean code and
+                                    pixel perfect. I also
+                                    make the website more & more interactive with web animations. A responsive design
+                                    makes your website
+                                    accessible to all users. regardless of their device.
+                                </p>
+                            </div>
+                        </section>
                     </div>
                 </div>
             </div>
