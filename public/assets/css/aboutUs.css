@@ -1,57 +1,69 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-}
-
 body {
-    background-color: black;
+  font-family: Arial, sans-serif;
+  background-color: #EAD196; /* Cream background */
+  margin: 0;
+  padding: 0;
 }
 
-#aboutUs {
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff; /* White background for container */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
 }
 
-#aboutUs img {
-    width: 400px;
-    margin: 20px;
-    border-radius: 10px;
+h1 {
+  text-align: center;
+  color: #a31f34;
+  margin-bottom: 20px;
 }
 
-.content {
-    margin: 20px 0;
+.cards {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
 }
 
-.content h2 {
-    font-size: 50px;
-    color:  black;
+.card {
+  background-color: #fff; /* White background for cards */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  width: 48%;
 }
 
-.content h4 {
-    font-size: 20px;
-    color:  black;
-    margin: 10px 0;
+.card h2 {
+  color: #5a5a5a;
+  margin-top: 0;
 }
 
-.description {
-    color:  black;
-    margin: 20px 0;
-    font-size: 18px;
-    line-height: 30px;
-    font-weight: 100;
+.card p {
+  text-align: justify;
+  text-justify: inter-word;
 }
 
+.reach-out {
+  background-color: #fff; /* White background for reach-out section */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
-@media screen and (max-width: 790px) {
-    #aboutUs img {
-        width: 80%;
-    }
+.reach-out h2 {
+  color: #5a5a5a;
+  margin-top: 0;
+}
 
-    #aboutUs {
-        grid-template-columns: 1fr;
-        place-items: center;
-    }
+.reach-out p {
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+p {
+  color: #333;
+  line-height: 1.6;
+  margin: 10px 0;
 }
