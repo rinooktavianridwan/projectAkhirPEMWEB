@@ -2,6 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CarController;
+
+Route::get('/get-cars', [CarController::class, 'getCars']);
+
+Route::post('/add-car', [CarController::class, 'addCar']);
+Route::put('/edit-car/{id}', [CarController::class, 'editCar']);
+Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar']);
+
+
 
 Route::get('/', function () {
     return view('layouts.Guest.indexGuest');
@@ -41,6 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 
 
