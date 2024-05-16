@@ -38,19 +38,14 @@
                                     Admin
                                 </a>
                             @endif
-                            <div class="search">
-                                <form action="/search" method="GET">
-                                    <select name="search_type">
-                                        <option value="" disabled selected>Pilih Kota</option>
-                                        <!-- Tambahkan opsi kota di sini -->
-                                    </select>
-                                    <select name="search_type">
-                                        <option value="" disabled selected>Pilih Kategori</option>
-                                        <!-- Tambahkan opsi kategori di sini -->
-                                    </select>
-                                    <button type="submit">Search</button>
-                                </form>
-                            </div>                            
+                            <div class="search-box">
+                                <select>
+                                    <option>Select Your Location</option>
+                                </select>
+                                <input type="date" placeholder="Set Renting Date">
+                                <input type="date" placeholder="Set Return Date">
+                                <button>Search</button>
+                            </div>                          
                         </div>
                         <div class="cars-container">
                             <div class="shell">

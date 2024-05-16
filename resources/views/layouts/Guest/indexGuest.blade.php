@@ -27,13 +27,19 @@
 
     <!-- Banners -->
     <section class="banner-section">
-        <div class="container-home">
-            <h1>Renting a car has never been this easy, Start your own journey now!</h1>
-            <div class = "search">
-                <form action="/search" method="GET">
-                    <button type="submit">More</button>
-                </form>
+        <div class="header">
+            <div class="text-overlay">
+                <h1>Renting a car has never been this easy,</h1>
+                <h1>Start your own journey now!</h1>
             </div>
+        </div>
+        <div class="search-box">
+            <select>
+                <option>Select Your Location</option>
+            </select>
+            <input type="date" placeholder="Set Renting Date">
+            <input type="date" placeholder="Set Return Date">
+            <button>Search</button>
         </div>
     </section>
     <!-- /Banners -->
