@@ -7,7 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="keywords" content="">
     <meta name="description" content="">
-    <title>Car Rental Portal</title>
+
+    <title>Car Rental</title>
+    <link rel="icon" href="images/logonya.png" type="image/x-icon">
 
     
     <link rel="stylesheet" href="assets/css/header.css" type="text/css">
