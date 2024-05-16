@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Company Profile</title>
     <link rel="stylesheet" href="assets/css/aboutUs.css" type="text/css">
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('layouts.navigation')
 </head>
