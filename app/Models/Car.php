@@ -20,7 +20,6 @@ class Car extends Model
         'image',
         'city',
         'status',
-        'transaction_id',
         'price',
     ];
 

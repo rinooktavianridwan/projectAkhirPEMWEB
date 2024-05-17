@@ -68,7 +68,6 @@
                             <th>Gambar</th>
                             <th>Kota</th>
                             <th>Status</th>
-                            <th>id pemesan</th>
                             <th>Harga</th>
                             <th>Actions</th>
                         </tr>
@@ -104,8 +103,7 @@
                         </div>
                         <div class="form-group">
                             <label for="image">Gambar</label>
-                            <input type="file" class="form-control" id="image" accept="image/png, image/jpeg"
-                                required>
+                            <input type="file" class="form-control" id="image" accept="image/png, image/jpeg">
                             <img id="imagePreview" src="#" alt="Image Preview"
                                 style="display: none; width: 100px; height: auto; margin-top: 10px;">
                         </div>
@@ -119,10 +117,6 @@
                                 <option value="Tersedia">Tersedia</option>
                                 <option value="Tidak Tersedia">Tidak Tersedia</option>
                             </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="orderName">Nama Pemesan</label>
-                            <input type="text" class="form-control" id="orderName" required>
                         </div>
                         <div class="form-group">
                             <label for="price">Harga</label>
@@ -162,7 +156,6 @@
                     <td><img src="/storage/${car.image}" alt="${car.name}" style="width: 100px; height: auto;"></td>
                     <td>${car.city}</td>
                     <td>${car.status}</td>
-                    <td>${car.transaction_id}</td>
                     <td>${car.price}</td>
                     <td>
                         <button class="btn btn-info" onclick="viewCar(${index})">View</button>
@@ -186,8 +179,15 @@
                 }
             });
 
+            // Reset form fields
+            function resetForm() {
+                $('#carForm')[0].reset();
+                $('#imagePreview').hide();
+            }
+
             // Add Car Function
             $('#addButton').click(function() {
+                resetForm(); // Reset form fields before showing the modal
                 $('#carModal').modal('show');
                 $('#saveButton').off('click').on('click', function() {
                     let formData = new FormData();
@@ -196,7 +196,6 @@
                     formData.append('image', $('#image')[0].files[0]);
                     formData.append('city', $('#city').val());
                     formData.append('status', $('#status').val());
-                    formData.append('orderName', $('#orderName').val());
                     formData.append('price', $('#price').val());
 
                     $.ajax({
@@ -218,13 +217,14 @@
             });
 
             // Edit Car Function
+            // Edit Car Function
             window.editCar = function(index) {
+                resetForm(); // Reset form fields before showing the modal
                 let car = cars[index];
                 $('#name').val(car.name);
                 $('#category').val(car.category);
                 $('#city').val(car.city);
                 $('#status').val(car.status);
-                $('#orderName').val(car.orderName);
                 $('#price').val(car.price);
                 $('#carModal').modal('show');
                 $('#saveButton').off('click').on('click', function() {
@@ -236,7 +236,6 @@
                     }
                     formData.append('city', $('#city').val());
                     formData.append('status', $('#status').val());
-                    formData.append('orderName', $('#orderName').val());
                     formData.append('price', $('#price').val());
 
                     $.ajax({
@@ -251,11 +250,17 @@
                             $('#carModal').modal('hide');
                         },
                         error: function(xhr, status, error) {
-                            console.error("Error updating car: ", status, error);
+                            // Log error response for debugging
+                            console.error("Error updating car: ", xhr.responseText);
+                            console.error("Status: ", status);
+                            console.error("Error: ", error);
                         }
                     });
                 });
             };
+
+
+
 
             // Delete Car Function
             window.deleteCar = function(index) {
@@ -288,12 +293,12 @@
                 });
             };
 
-
             // View Car Function
             window.viewCar = function(index) {
                 let car = cars[index];
                 alert(
-                    `Name: ${car.name}\nCategory: ${car.category}\nImage: ${car.image}\nCity: ${car.city}\nStatus: ${car.status}\nOrder Name: ${car.orderName}\nPrice: ${car.price}`);
+                    `Name: ${car.name}\nCategory: ${car.category}\nImage: ${car.image}\nCity: ${car.city}\nStatus: ${car.status}\nPrice: ${car.price}`
+                );
             };
 
             // Image preview function

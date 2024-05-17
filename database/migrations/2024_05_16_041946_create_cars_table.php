@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('image');  // gambar
             $table->string('city');  // kota
             $table->string('status');  // status
-            $table->unsignedBigInteger('transaction_id')->nullable();  // id transaksi, boleh null
             $table->decimal('price', 10, 2);  // Harga
             $table->timestamps();
         });

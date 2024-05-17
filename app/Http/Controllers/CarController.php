@@ -1,12 +1,11 @@
 <?php
-// CarController.php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
 use Illuminate\Support\Facades\Storage;
-
-use function Laravel\Prompts\alert;
+use Illuminate\Support\Facades\Log;
 
 class CarController extends Controller
 {
@@ -23,7 +22,6 @@ class CarController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'city' => 'required',
             'status' => 'required',
-            'orderName' => 'required',
             'price' => 'required',
         ]);
 
@@ -37,7 +35,6 @@ class CarController extends Controller
             'image' => $imagePath,
             'city' => $request->city,
             'status' => $request->status,
-            'orderName' => $request->orderName,
             'price' => $request->price,
         ]);
 
@@ -46,32 +43,42 @@ class CarController extends Controller
 
     public function editCar(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'category' => 'required',
-            'image' => 'image|mimes:jpeg,png,jpg|max:2048',
-            'city' => 'required',
-            'status' => 'required',
-            'orderName' => 'required',
-            'price' => 'required',
-        ]);
-
         $car = Car::findOrFail($id);
 
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('cars', 'public');
-            $car->image = $imagePath;
-        }
-        
+        $dataToUpdate = [];
 
-        $car->update([
-            'name' => $request->name,
-            'category' => $request->category,
-            'city' => $request->city,
-            'status' => $request->status,
-            'orderName' => $request->orderName,
-            'price' => $request->price,
-        ]);
+        if ($request->has('name') && $request->name !== $car->name) {
+            $dataToUpdate['name'] = $request->name;
+        }
+        if ($request->has('category') && $request->category !== $car->category) {
+            $dataToUpdate['category'] = $request->category;
+        }
+        if ($request->has('city') && $request->city !== $car->city) {
+            $dataToUpdate['city'] = $request->city;
+        }
+        if ($request->has('status') && $request->status !== $car->status) {
+            $dataToUpdate['status'] = $request->status;
+        }
+        if ($request->has('price') && $request->price !== $car->price) {
+            $dataToUpdate['price'] = $request->price;
+        }
+
+        if ($request->hasFile('image')) {
+            // Log image upload for debugging
+            Log::info("Image found in request");
+
+            $imagePath = $request->file('image')->store('cars', 'public');
+            $dataToUpdate['image'] = $imagePath;
+
+            // Delete the old image
+            if (Storage::disk('public')->exists($car->image)) {
+                Storage::disk('public')->delete($car->image);
+            }
+        }
+
+        if (!empty($dataToUpdate)) {
+            $car->update($dataToUpdate);
+        }
 
         return response()->json($car);
     }
@@ -80,10 +87,8 @@ class CarController extends Controller
     {
         $imageName = $request->image;
 
-        // Hapus gambar dari penyimpanan
-        if (Storage::disk('public')->exists('cars/' . $imageName)) {
-            alert("ada");
-            Storage::disk('public')->delete('cars/' . $imageName);
+        if (Storage::disk('public')->exists($imageName)) {
+            Storage::disk('public')->delete($imageName);
             return response()->json(['message' => 'Image deleted successfully']);
         } else {
             return response()->json(['message' => 'Image not found'], 404);
@@ -97,4 +102,3 @@ class CarController extends Controller
         return response()->json(null, 204);
     }
 }
-
