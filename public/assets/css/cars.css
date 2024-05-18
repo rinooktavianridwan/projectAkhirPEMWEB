@@ -1,5 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Muli:400,400i,700,700i");
+
+.width-car {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .cars-container {
+    width: 100%;
     background-image: url("/images/logo.svg");
     /* opacity 60% background */
     background-color: #f3edc8;
@@ -13,11 +22,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 20px;
     row-gap: 200px;
     column-gap: 50px;
-    padding: 0 5px;
     padding-bottom: 250px;
+    border-radius: 20px;
 }
 
 body {
@@ -25,6 +33,7 @@ body {
 }
 
 .searching-cars {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,8 +68,8 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-  }
-  .search-box button {
+}
+.search-box button {
     margin: 5px;
     padding: 10px 20px;
     border: none;
@@ -76,28 +85,19 @@ body {
 }
 
 .shell {
-    padding: 80px 0;
+    padding: 40px 0;
     width: 200px;
-    height: 250px;
+    justify-content: center;
 }
 .wsk-cp-product {
     background: #fff;
-    padding: 15px;
     border-radius: 6px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
     position: relative;
-    margin: 20px auto;
 }
 .wsk-cp-img {
     position: absolute;
     top: 5px;
-    left: 50%;
-    transform: translate(-50%);
-    -webkit-transform: translate(-50%);
-    -ms-transform: translate(-50%);
-    -moz-transform: translate(-50%);
-    -o-transform: translate(-50%);
-    -khtml-transform: translate(-50%);
     width: 100%;
     padding: 15px;
     transition: all 0.2s ease-in-out;
@@ -118,24 +118,18 @@ body {
     padding-top: 80%;
 }
 .wsk-cp-text .category {
+    cursor: pointer;
     text-align: center;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
-    padding: 5px;
-    margin-bottom: 45px;
+    padding-top: 10px;
+    margin-bottom: 35px;
     position: relative;
     transition: all 0.2s ease-in-out;
 }
 .wsk-cp-text .category > * {
     position: absolute;
-    top: 50%;
-    left: 50%;
     transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-    -khtml-transform: translate(-50%, -50%);
 }
 .wsk-cp-text .category > span {
     padding: 12px 30px;
@@ -156,11 +150,11 @@ body {
 }
 .wsk-cp-text .title-product {
     text-align: center;
+    padding-bottom: 10px;
 }
 .wsk-cp-text .title-product h3 {
     font-size: 20px;
     font-weight: bold;
-    margin: 15px auto;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -246,4 +240,35 @@ body {
     .wsk-cp-product .wsk-cp-text .category {
         margin-top: 0px;
     }
+}
+
+
+/* Modal */
+.judul-modal h5{
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+
+.isi-modal{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    text-align: center;
+}
+
+.modal-bawah{
+    width: 100%;
+    justify-content: space-between;
+}
+
+.modal-bawah button{
+    width: 40%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
 }
