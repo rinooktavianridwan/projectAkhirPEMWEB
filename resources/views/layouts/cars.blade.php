@@ -73,6 +73,8 @@
                     <div class="text-center isi-modal">
                         <img id="carImage" src="" alt="Car Image">
                     </div>
+                    <!-- biarin id sembunyi  JANGAN DI HAPUS-->
+                    <p style="display: none;"><strong>id:</strong> <span id="id"></span></p> 
                     <p><strong>Nama:</strong> <span id="carName"></span></p>
                     <p><strong>Kategori:</strong> <span id="carCategory"></span></p>
                     <p><strong>Kota:</strong> <span id="carCity"></span></p>

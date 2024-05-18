@@ -30,7 +30,7 @@ class TransactionController extends Controller
     {
         $bookedDates = Transaction::where('car_id', $carId)->get();
         return response()->json($bookedDates);
-    }
+    } 
     
     
 }
