@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Car;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -133,5 +134,9 @@ class CarController extends Controller
         return view('layouts.cars', compact('cars', 'uniqueCategories', 'uniqueCities'));
     }
 
+    public function getUnavailableDates($carId) {
+        $unavailableDates = Transaction::where('car_id', $carId)->pluck('booking_date')->toArray();
+        return response()->json($unavailableDates);
+    }
     
 }

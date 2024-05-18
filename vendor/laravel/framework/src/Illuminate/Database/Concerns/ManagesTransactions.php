@@ -116,20 +116,17 @@ trait ManagesTransactions
      *
      * @throws \Throwable
      */
+    
     public function beginTransaction()
     {
         foreach ($this->beforeStartingTransaction as $callback) {
             $callback($this);
         }
-
         $this->createTransaction();
-
         $this->transactions++;
-
         $this->transactionsManager?->begin(
             $this->getName(), $this->transactions
         );
-
         $this->fireConnectionEvent('beganTransaction');
     }
 

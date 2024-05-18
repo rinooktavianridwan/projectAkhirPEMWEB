@@ -9,8 +9,7 @@
     <meta name="description" content="">
 
     <title>Car Rental</title>
-    <link rel="icon" href="images/logonya.png" type="image/x-icon">
-
+    <link class = "logo" rel="icon" href="images/logonya.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/header.css" type="text/css">
     <link rel="stylesheet" href="assets/css/homePage.css" type="text/css">
     <link rel="stylesheet" href="assets/css/login.css" type="text/css">

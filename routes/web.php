@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/get-cars', [CarController::class, 'getCars']);
 
@@ -14,6 +15,15 @@ Route::post('/delete-image', [CarController::class, 'deleteImage']);
 Route::get('/get-unique-categories', [CarController::class, 'getUniqueCategories']);
 Route::get('/get-unique-cities', [CarController::class, 'getUniqueCities']);
 
+Route::post('/save-transaction', [TransactionController::class, 'saveTransaction'])->name('save.transaction');
+Route::get('/get-unavailable-dates/{carId}', [CarController::class, 'getUnavailableDates']);
+
+
+Route::get('/get-transactions', 'TransactionController@getTransactions');
+
+// buat /transactions
+Route::post('/transactions', [TransactionController::class, 'store']);
+
 Route::get('/', function () {
     return view('layouts.Guest.indexGuest');
 });
@@ -23,7 +33,18 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/cars', [CarController::class, 'index'])->middleware(['auth', 'verified'])->name('cars');
+// Route::get('/cars', [CarController::class, 'index'])->middleware(['auth', 'verified'])->name('cars');
+
+Route::get('/cars', function () {
+    
+    $user = auth()->user();
+    return view('layouts.cars', ['user' => $user]);
+})->middleware(['auth', 'verified',])->name('cars');
+
+
+
+
+
 
 Route::get('/aboutUs', function () {
     return view('layouts.aboutUs');

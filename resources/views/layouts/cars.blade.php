@@ -81,19 +81,50 @@
                 </div>
                 <div class="modal-footer modal-bawah">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Pesan</button>
+                    <button type="button" class="btn btn-primary" onclick="openTransactionModal()">Pesan</button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="transactionModalLabel">Pemesanan Kendaraan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="transactionForm">
+                    <div class="form-group">
+                        <label for="pickupDate">Tanggal Pengambilan:</label>
+                        <input type="date" id="pickupDate" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="returnDate">Tanggal Pengembalian:</label>
+                        <input type="date" id="returnDate" class="form-control" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-primary" onclick="calculateCost()">Hitung Biaya</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
+        
         $(document).ready(function() {
-            let cars = []; // Store car data globally
+            let cars = [];
             let uniqueCategories = [];
             let uniqueCities = [];
+            
 
             $.ajaxSetup({
                 headers: {
@@ -101,6 +132,9 @@
                 }
             });
 
+            function getCars() {
+                return cars;
+            }
             // Function to update car list
             function updateCarList(cars) {
                 let carList = $('#car-loop');
@@ -205,6 +239,7 @@
             // View Car Function
             window.viewCar = function(index) {
                 let car = cars[index];
+                $('#id').text(car.id);
                 $('#carName').text(car.name);
                 $('#carCategory').text(car.category);
                 $('#carImage').attr('src', '/storage/' + car.image);
@@ -214,6 +249,78 @@
                 $('#carModal').modal('show');
             };
         });
+
+        
+
+        function openTransactionModal() {
+            // Pastikan pengguna sudah login
+            if (!userLoggedIn()) {
+                alert("Anda harus login terlebih dahulu untuk melakukan pemesanan.");
+                return;
+            }
+            $('#transactionModal').modal('show');
+        }
+        
+        
+        function calculateCost() {
+            
+            const carId =document.getElementById('id');
+            const pickupDate = document.getElementById('pickupDate').value;
+            const returnDate = document.getElementById('returnDate').value;
+            if (!pickupDate || !returnDate || new Date(pickupDate) >= new Date(returnDate)) {
+                alert("Tanggal pengembalian harus setelah tanggal pengambilan.");
+                return;
+            }
+            const msPerDay = 86400000;
+            const start = new Date(pickupDate);
+            const end = new Date(returnDate);
+            const duration = Math.ceil((end - start) / msPerDay);
+            const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace(',', '.'));
+            const totalCost = duration * costPerDay;
+            
+            alert(`Estimasi Biaya Penyewaan: Rp${totalCost.toLocaleString('id-ID')} untuk ${duration} hari. carId: ${carId.innerText}`);
+
+            
+            let formData = new FormData();
+            formData.append('user_id', '{{ $user->id }}');
+            formData.append('car_id', carId.innerText);
+            formData.append('pickup_date', pickupDate);
+            formData.append('return_date', returnDate);
+            formData.append('transaction_value', totalCost); // Pastikan nama field ini sesuai dengan yang di backend
+
+            formData.append('_token', '{{ csrf_token() }}'); // Menambahkan CSRF token
+
+            $.ajax({
+                url: '/transactions',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    alert("Pemesanan berhasil!");
+                    $('#transactionModal').modal('hide');
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error submitting transaction: ", status, error);
+                    alert("Terjadi kesalahan saat melakukan pemesanan.");
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+        }
+
+        function userLoggedIn() {
+            return '{{ $user->id }}' !== '';
+        }
+
     </script>
 </body>
 

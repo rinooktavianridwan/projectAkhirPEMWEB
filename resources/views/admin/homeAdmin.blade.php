@@ -106,7 +106,8 @@
                         <thead>
                             <th>Transaction</th>
                             <th>Date Order</th>
-                            <th>Use</th>
+                            <th>Duration</th>
+                            <th>Biaya</th>
                             <th>Status</th>
                         </thead>
                         <tbody>
@@ -123,7 +124,8 @@
                                         <p>No Telepon : {{ $transaction->user->phone }}</p>
                                     </td>
                                     <td>{{ $transaction->updated_at }}</td>
-                                    <td>{{ $transaction->pickup_date }}-{{ $transaction->return_date }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($transaction->pickup_date)->diffInDays(\Carbon\Carbon::parse($transaction->return_date)) }} days</td>
+                                    <td>Rp{{ number_format($transaction->transaction_value, 0, ',', '.') }}</td>
                                     <td>
                                         @if (now() < $transaction->pickup_date)
                                             Booked
