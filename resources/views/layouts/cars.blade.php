@@ -33,11 +33,6 @@
                         <div class="searching-cars">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 ">
                         <div class="tombolLogin">
-                            @if (Route::has('admin'))
-                                <a href="{{ url('/admin') }}">
-                                    Admin
-                                </a>
-                            @endif
                             <div class="search-box">
                                 <select>
                                     <option>Select Your Location</option>

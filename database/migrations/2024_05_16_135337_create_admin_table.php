@@ -12,14 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->id();  // id admin, otomatis bertambah
-            $table->string('email')->unique();  // email
-            $table->string('phone')->nullable();  // phone
-            $table->string('address')->nullable();  // address
-            $table->string('city')->nullable();  // city
-            $table->string('country')->nullable();  // country
-            $table->string('postal_code')->nullable();  // postal_code
-            $table->timestamps();  // created_at dan updated_at
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamps();
         });
     }
 

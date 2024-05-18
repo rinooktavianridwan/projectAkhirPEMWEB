@@ -12,6 +12,10 @@ Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar']);
 Route::post('/delete-image', [CarController::class, 'deleteImage']);
 
 
+
+
+
+
 Route::get('/', function () {
     return view('layouts.Guest.indexGuest');
 });
@@ -31,10 +35,11 @@ Route::get('/aboutUs', function () {
 })->middleware(['auth', 'verified'])->name('aboutUs');
 
 // admin
-
 Route::get('/admin', function () {
     return view('admin.homeAdmin');
 })->middleware(['auth', 'verified'])->name('admin');
+
+
 
 Route::get('/siadmin', function () {
     return view('admin.siadmin');
