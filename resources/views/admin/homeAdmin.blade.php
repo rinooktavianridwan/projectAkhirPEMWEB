@@ -111,19 +111,28 @@
 							</tr>
 						</thead>
 						<tbody>
-                            <!-- tabel recent order -->
+							<!-- tabel recent order -->
+							@foreach($transactions as $transaction)
 							<tr>
 								<td>
-									<img src="img/people.png">
-									<p>Nama user pemesan</p>
-                                    <p>id pesanan</p>
-                                    <p>jenis kendaraan</p>
-                                    <p>Lokasi</p>
+									<img src="/storage/{{ $transaction->car->image }}" alt="user" />
+									<p>{{ $transaction->user->name }}</p>
+									<p>{{ $transaction->id }}</p>
+									<p>{{ $transaction->car->name }}</p>
+									<p>{{ $transaction->car->city }}</p>
 								</td>
-								<td>01-10-2021</td>
-								<td>terpinjam</td>
+								<td>{{ $transaction->updated_at }}</td>
+								<td>
+									@if (now() < $transaction->pickup_date)
+										Booked
+									@elseif (now() >= $transaction->pickup_date && now() < $transaction->return_date)
+										Sedang Digunakan
+									@else
+										Done
+									@endif
+								</td>
 							</tr>
-						
+							@endforeach
 						</tbody>
 					</table>
 				</div>

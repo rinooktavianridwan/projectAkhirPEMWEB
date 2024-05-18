@@ -17,11 +17,6 @@ Route::post('/delete-image', [CarController::class, 'deleteImage']);
 
 
 
-Route::get('/admin', function () {
-    $totalTransactionValue = \App\Models\Transaction::sum('transaction_value');
-    $banyakTransaksi = \App\Models\Transaction::count();
-    return view('admin.homeAdmin', ['total' => $totalTransactionValue , 'banyakTransaksi' => $banyakTransaksi]);
-})->middleware(['auth', 'verified'])->name('admin');
 
 
 
@@ -48,6 +43,12 @@ Route::get('/aboutUs', function () {
 // admin
 
 
+Route::get('/admin', function () {
+    $totalTransactionValue = \App\Models\Transaction::sum('transaction_value');
+    $banyakTransaksi = \App\Models\Transaction::count();
+    $transactions = \App\Models\Transaction::all();
+    return view('admin.homeAdmin', ['total' => $totalTransactionValue , 'banyakTransaksi' => $banyakTransaksi], ['transactions' => $transactions]);
+})->middleware(['auth', 'verified',])->name('admin');
 
 
 Route::get('/siadmin', function () {
