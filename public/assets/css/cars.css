@@ -32,6 +32,17 @@ body {
     background-color: #f3edc8 !important;
 }
 
+.cari-mobil{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    width: fit-content;
+    text-align: center;
+    height: 40px;
+    gap: 10px;
+    font-size: 30px;
+}
+
 .searching-cars {
     width: 100%;
     display: flex;

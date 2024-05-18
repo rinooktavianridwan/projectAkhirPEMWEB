@@ -11,16 +11,8 @@ Route::post('/edit-car/{id}', [CarController::class, 'editCar']);
 Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar']);
 Route::post('/delete-image', [CarController::class, 'deleteImage']);
 
-
-
-
-
-
-
-
-
-
-
+Route::get('/get-unique-categories', [CarController::class, 'getUniqueCategories']);
+Route::get('/get-unique-cities', [CarController::class, 'getUniqueCities']);
 
 Route::get('/', function () {
     return view('layouts.Guest.indexGuest');

@@ -14,6 +14,18 @@ class CarController extends Controller
         return response()->json(Car::all());
     }
 
+    public function getUniqueCategories()
+    {
+        $categories = Car::distinct()->pluck('category');
+        return response()->json($categories);
+    }
+
+    public function getUniqueCities()
+    {
+        $cities = Car::distinct()->pluck('city');
+        return response()->json($cities);
+    }
+
     public function addCar(Request $request)
     {
         $request->validate([
@@ -96,4 +108,6 @@ class CarController extends Controller
         $car->delete();
         return response()->json(null, 204);
     }
+
+    
 }

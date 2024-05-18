@@ -29,10 +29,26 @@
             <div class="py-12 ">
                 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 ">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                        <div class="search">
+                            <div class="cari-mobil">
+                                <h1>Kategori</h1>
+                                <select name="kategori" id="kategori">
+                                    <option value="">Semua Kategori</option>
+                                    <!-- Opsi kategori akan diisi dengan data dari database -->
+                                </select>
+                            </div>
+                            <div class="cari-mobil">
+                                <h1>Kota</h1>
+                                <select name="kota" id="kota">
+                                    <option value="">Semua Kota</option>
+                                    <!-- Opsi kota akan diisi dengan data dari database -->
+                                </select>
+                            </div>
+                        </div>
                         <div class="searching-cars">
                             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 width-car">
                                 <div class="cars-container" id="car-loop">
-
+                                    <!-- Loopan mobil akan diisi oleh JavaScript -->
                                 </div>
                             </div>
                         </div>
@@ -76,6 +92,8 @@
     <script>
         $(document).ready(function() {
             let cars = []; // Store car data globally
+            let uniqueCategories = [];
+            let uniqueCities = [];
 
             $.ajaxSetup({
                 headers: {
@@ -89,39 +107,99 @@
                 carList.empty();
                 $.each(cars, function(index, car) {
                     carList.append(`
-                        <div class="shell">
-                            <div class="wsk-cp-product">
-                                <div class="wsk-cp-img">
-                                    <img src="/storage/${car.image}" alt="${car.name}" class="img-responsive" />
-                                </div>
-                                <div class="wsk-cp-text">
-                                    <div class="category">
-                                        <span><button class="" onclick="viewCar(${index})">More</button></span>
-                                    </div>
-                                    <div class="title-product">
-                                        <h3>${car.city}</h3>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="wcf-left"><span class="price">Rp${car.price}</span></div>
-                                    </div>
-                                </div>
+                <div class="shell">
+                    <div class="wsk-cp-product">
+                        <div class="wsk-cp-img">
+                            <img src="/storage/${car.image}" alt="${car.name}" class="img-responsive" />
+                        </div>
+                        <div class="wsk-cp-text">
+                            <div class="category">
+                                <span><button class="" onclick="viewCar(${index})">More</button></span>
+                            </div>
+                            <div class="title-product">
+                                <h3>${car.city}</h3>
+                            </div>
+                            <div class="card-footer">
+                                <div class="wcf-left"><span class="price">Rp${car.price}</span></div>
                             </div>
                         </div>
-                    `);
+                    </div>
+                </div>
+            `);
                 });
             }
 
             // Fetch cars from server
-            $.ajax({
-                url: '/get-cars',
-                method: 'GET',
-                success: function(data) {
-                    cars = data;
-                    updateCarList(cars);
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error fetching cars: ", status, error);
-                }
+            function fetchCars() {
+                $.ajax({
+                    url: '/get-cars',
+                    method: 'GET',
+                    success: function(data) {
+                        cars = data;
+                        updateCarList(cars);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching cars: ", status, error);
+                    }
+                });
+            }
+
+            // Fetch unique categories from server
+            function fetchUniqueCategories() {
+                $.ajax({
+                    url: '/get-unique-categories',
+                    method: 'GET',
+                    success: function(data) {
+                        uniqueCategories = data;
+                        populateOptions('kategori', uniqueCategories);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching unique categories: ", status, error);
+                    }
+                });
+            }
+
+            // Fetch unique cities from server
+            function fetchUniqueCities() {
+                $.ajax({
+                    url: '/get-unique-cities',
+                    method: 'GET',
+                    success: function(data) {
+                        uniqueCities = data;
+                        populateOptions('kota', uniqueCities);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching unique cities: ", status, error);
+                    }
+                });
+            }
+
+            // Populate select options
+            function populateOptions(elementId, data) {
+                let selectElement = $(`select[name="${elementId}"]`);
+                selectElement.empty();
+                selectElement.append(`<option value="">Semua ${elementId}</option>`);
+                data.forEach(option => {
+                    selectElement.append(`<option value="${option}">${option}</option>`);
+                });
+            }
+
+            // Fetch initial data
+            fetchCars();
+            fetchUniqueCategories();
+            fetchUniqueCities();
+
+            // Event handler for category and city select
+            $('select[name="kategori"], select[name="kota"]').on('change', function() {
+                let selectedCategory = $('select[name="kategori"]').val();
+                let selectedCity = $('select[name="kota"]').val();
+
+                let filteredCars = cars.filter(car => {
+                    return (selectedCategory === '' || car.category === selectedCategory) &&
+                        (selectedCity === '' || car.city === selectedCity);
+                });
+
+                updateCarList(filteredCars);
             });
 
             // View Car Function
@@ -132,7 +210,7 @@
                 $('#carImage').attr('src', '/storage/' + car.image);
                 $('#carCity').text(car.city);
                 $('#carStatus').text(car.status);
-                $('#carPrice').text(car.price);
+                $('#carPrice').text('Rp' + car.price.toLocaleString('id-ID'));
                 $('#carModal').modal('show');
             };
         });
