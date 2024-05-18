@@ -16,6 +16,17 @@ Route::post('/delete-image', [CarController::class, 'deleteImage']);
 
 
 
+
+Route::get('/admin', function () {
+    $totalTransactionValue = \App\Models\Transaction::sum('transaction_value');
+    $banyakTransaksi = \App\Models\Transaction::count();
+    return view('admin.homeAdmin', ['total' => $totalTransactionValue , 'banyakTransaksi' => $banyakTransaksi]);
+})->middleware(['auth', 'verified'])->name('admin');
+
+
+
+
+
 Route::get('/', function () {
     return view('layouts.Guest.indexGuest');
 });
@@ -35,9 +46,7 @@ Route::get('/aboutUs', function () {
 })->middleware(['auth', 'verified'])->name('aboutUs');
 
 // admin
-Route::get('/admin', function () {
-    return view('admin.homeAdmin');
-})->middleware(['auth', 'verified'])->name('admin');
+
 
 
 
