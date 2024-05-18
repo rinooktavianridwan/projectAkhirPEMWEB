@@ -11,12 +11,9 @@
     <title>Car Rental</title>
     <link rel="icon" href="images/logonya.png" type="image/x-icon">
 
-    
     <link rel="stylesheet" href="assets/css/header.css" type="text/css">
     <link rel="stylesheet" href="assets/css/homePage.css" type="text/css">
-    <link rel="stylesheet" href="assets/css/all.css" type="text/css">
     <link rel="stylesheet" href="assets/css/login.css" type="text/css">
-    
     <link rel="stylesheet" href="assets/css/footer.css" type="text/css">
 
 </head>
@@ -29,40 +26,88 @@
 
     <!-- Banners -->
     <section class="banner-section">
-        <div class="header">
+        <div class="banner-header">
             <div class="text-overlay">
                 <h1>Renting a car has never been this easy,</h1>
                 <h1>Start your own journey now!</h1>
             </div>
         </div>
-        <div class="search-box">
-            <select>
-                <option>Select Your Location</option>
-            </select>
-            <input type="date" placeholder="Set Renting Date">
-            <input type="date" placeholder="Set Return Date">
-            <button>Search</button>
-        </div>
+        <form action="{{ url('/cars') }}" method="GET" class="search-box">
+            <div class="cari-mobil">
+                <select name="kategori" id="kategori">
+                    <option value="">Semua Kategori</option>
+                </select>
+            </div>
+            <div class="cari-mobil">
+                <select name="kota" id="kota">
+                    <option value="">Semua Kota</option>
+                </select>
+            </div>
+            <div class="cari-mobil">
+                <button type="submit">Search</button>
+            </div>
+        </form>
     </section>
     <!-- /Banners -->
     <!--Footer -->
-    @include('layouts\footer')
+    @include('layouts.footer')
     <!-- /Footer-->
 
     <!--Back to top-->
-    <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a>
-    </div>
-    <script>
-        let nav = document.querySelector("nav");
-        window.onscroll = function() {
-            if (document.documentElement.scrollTop > 20) {
-                nav.classList.add("sticky");
-            } else {
-                nav.classList.remove("sticky");
-            }
-        }
-    </script>
+    <div id="back-top" class="back-top"> <a href="#top"><i class="fa fa-angle-up" aria-hidden="true"></i> </a></div>
 
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        let uniqueCategories = [];
+        let uniqueCities = [];
+
+        $(document).ready(function() {
+            // Fetch unique categories from server
+            function fetchUniqueCategories() {
+                $.ajax({
+                    url: '/get-unique-categories',
+                    method: 'GET',
+                    success: function(data) {
+                        uniqueCategories = data;
+                        console.log("Categories fetched:", uniqueCategories); // Log data for debugging
+                        populateOptions('kategori', uniqueCategories);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching unique categories: ", status, error);
+                    }
+                });
+            }
+
+            // Fetch unique cities from server
+            function fetchUniqueCities() {
+                $.ajax({
+                    url: '/get-unique-cities',
+                    method: 'GET',
+                    success: function(data) {
+                        uniqueCities = data;
+                        console.log("Cities fetched:", uniqueCities); // Log data for debugging
+                        populateOptions('kota', uniqueCities);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching unique cities: ", status, error);
+                    }
+                });
+            }
+
+            // Populate select options
+            function populateOptions(elementId, data) {
+                let selectElement = $(`select[name="${elementId}"]`);
+                selectElement.empty();
+                selectElement.append(`<option value="">Semua ${elementId}</option>`);
+                data.forEach(option => {
+                    selectElement.append(`<option value="${option}">${option}</option>`);
+                });
+            }
+
+            fetchUniqueCategories();
+            fetchUniqueCities();
+        });
+    </script>
 </body>
 
 </html>

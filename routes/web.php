@@ -22,11 +22,8 @@ Route::get('/dashboard', function () {
     return view('layouts.Guest.indexGuest');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/cars', function () {
-    return view('layouts.cars');
-})->middleware(['auth', 'verified'])->name('cars');
 
-
+Route::get('/cars', [CarController::class, 'index'])->middleware(['auth', 'verified'])->name('cars');
 
 Route::get('/aboutUs', function () {
     return view('layouts.aboutUs');

@@ -109,5 +109,29 @@ class CarController extends Controller
         return response()->json(null, 204);
     }
 
+    public function index(Request $request)
+    {
+        $kategori = $request->input('kategori');
+        $kota = $request->input('kota');
+
+        $query = Car::query();
+
+        if ($kategori) {
+            $query->where('category', $kategori);
+        }
+
+        if ($kota) {
+            $query->where('city', $kota);
+        }
+
+        $cars = $query->get();
+
+        // Fetch unique categories and cities for the dropdowns
+        $uniqueCategories = Car::select('category')->distinct()->pluck('category');
+        $uniqueCities = Car::select('city')->distinct()->pluck('city');
+
+        return view('layouts.cars', compact('cars', 'uniqueCategories', 'uniqueCities'));
+    }
+
     
 }
