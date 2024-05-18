@@ -44,44 +44,39 @@ class CarController extends Controller
     public function editCar(Request $request, $id)
     {
         $car = Car::findOrFail($id);
+        // print data json update pada console
+        Log::info($request->all());
+        // Validasi data
+        $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'category' => 'sometimes|string|max:255',
+            'city' => 'sometimes|string|max:255',
+            'status' => 'sometimes|string|max:50',
+            'price' => 'sometimes|numeric',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+        ]);
 
-        $dataToUpdate = [];
-
-        if ($request->has('name') && $request->name !== $car->name) {
-            $dataToUpdate['name'] = $request->name;
-        }
-        if ($request->has('category') && $request->category !== $car->category) {
-            $dataToUpdate['category'] = $request->category;
-        }
-        if ($request->has('city') && $request->city !== $car->city) {
-            $dataToUpdate['city'] = $request->city;
-        }
-        if ($request->has('status') && $request->status !== $car->status) {
-            $dataToUpdate['status'] = $request->status;
-        }
-        if ($request->has('price') && $request->price !== $car->price) {
-            $dataToUpdate['price'] = $request->price;
-        }
-
+        // Jika ada file gambar yang diupload
         if ($request->hasFile('image')) {
-            // Log image upload for debugging
-            Log::info("Image found in request");
-
             $imagePath = $request->file('image')->store('cars', 'public');
-            $dataToUpdate['image'] = $imagePath;
+            $validatedData['image'] = $imagePath;
 
-            // Delete the old image
+            // Hapus gambar lama jika ada
             if (Storage::disk('public')->exists($car->image)) {
                 Storage::disk('public')->delete($car->image);
             }
         }
 
-        if (!empty($dataToUpdate)) {
-            $car->update($dataToUpdate);
-        }
+        // Mengisi atribut model dengan data yang tervalidasi
+        $car->fill($validatedData);
+
+        // Menyimpan perubahan ke database
+        $car->save();
 
         return response()->json($car);
     }
+
+
 
     public function deleteImage(Request $request)
     {

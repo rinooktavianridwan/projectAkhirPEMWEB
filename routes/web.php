@@ -7,7 +7,7 @@ use App\Http\Controllers\CarController;
 Route::get('/get-cars', [CarController::class, 'getCars']);
 
 Route::post('/add-car', [CarController::class, 'addCar']);
-Route::put('/edit-car/{id}', [CarController::class, 'editCar']);
+Route::post('/edit-car/{id}', [CarController::class, 'editCar']);
 Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar']);
 Route::post('/delete-image', [CarController::class, 'deleteImage']);
 

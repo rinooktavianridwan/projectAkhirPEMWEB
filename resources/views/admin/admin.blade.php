@@ -224,23 +224,32 @@
                 $('#name').val(car.name);
                 $('#category').val(car.category);
                 $('#city').val(car.city);
+                $('#imagePreview').attr('src', '/storage/' + car.image);
                 $('#status').val(car.status);
                 $('#price').val(car.price);
                 $('#carModal').modal('show');
                 $('#saveButton').off('click').on('click', function() {
                     let formData = new FormData();
                     formData.append('name', $('#name').val());
+                    console.log("Name:", $('#name').val());
                     formData.append('category', $('#category').val());
+                    console.log("category:", $('#category').val());
                     if ($('#image')[0].files[0]) {
                         formData.append('image', $('#image')[0].files[0]);
                     }
                     formData.append('city', $('#city').val());
+                    console.log("city:", $('#city').val());
                     formData.append('status', $('#status').val());
+                    console.log("status:", $('#status').val());
                     formData.append('price', $('#price').val());
+                    console.log("price:", $('#price').val());   
+                    console.log([...formData.entries()]);
+
 
                     $.ajax({
+                        
                         url: '/edit-car/' + car.id,
-                        method: 'PUT',
+                        method: 'POST',
                         data: formData,
                         contentType: false,
                         processData: false,
@@ -258,9 +267,6 @@
                     });
                 });
             };
-
-
-
 
             // Delete Car Function
             window.deleteCar = function(index) {
