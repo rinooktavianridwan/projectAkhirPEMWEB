@@ -261,6 +261,7 @@ body {
     margin-top: 30px;
 }
 
+/* Main Tabel */
 #content main .table-data {
     display: flex;
     flex-wrap: wrap;
@@ -292,26 +293,27 @@ body {
     flex-basis: 500px;
 }
 #content main .table-data .order table {
+    text-align: center;
+    justify-content: center;
     width: 100%;
     border-collapse: collapse;
 }
 #content main .table-data .order table th {
+    text-align: center;
+    justify-content: center;
     padding-bottom: 12px;
     font-size: 13px;
-    text-align: left;
-    border-bottom: 1px solid var(--grey);
+    border-bottom: 1px solid black;
 }
 #content main .table-data .order table td {
+    justify-content: center;
     padding: 16px 0;
 }
 #content main .table-data .order table tr td:first-child {
     padding-left: 6px;
 }
 #content main .table-data .order table td img {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
+    width: 150px;
 }
 #content main .table-data .order table tbody tr:hover {
     background: var(--grey);
@@ -410,4 +412,9 @@ body {
     #content main .table-data .todo .todo-list {
         min-width: 420px;
     }
+}
+
+
+.img-car-admin{
+    width: 600px;
 }
