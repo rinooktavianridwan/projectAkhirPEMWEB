@@ -31,10 +31,11 @@
                     <span class="text">Cars</span>
                 </a>
             </li>
+            <!-- balik ek main page -->
             <li>
-                <a href="{{ route('siadmin') }}">
+                <a href="{{ route('dashboard') }}">
                     <i class='bx bxs-group'></i>
-                    <span class="text">Profile</span>
+                    <span class="text">dashboard</span>
                 </a>
             </li>
             <li>

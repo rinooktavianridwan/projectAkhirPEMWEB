@@ -1,52 +1,83 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #EAD196; 
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+    .wrapper {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      width: 100%;
+      max-width: 500px;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+    }
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+    .input-field {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        padding: 0.625em;
+        box-sizing: border-box;
+        font-size: 1.125em;
+        background-color: #f0f0f0;
+        box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.1), inset -2px -2px 5px rgba(255, 255, 255, 0.7);
+    }
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+    .text-input, .text-input-2 {
+      position: relative;
+      width: 100%;
+      height: 50px; 
+      border-radius: 5px; 
+      margin-bottom: 10px;
+    }
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+    .button {
+      width: 100%;
+      padding: 0.625em;
+      font-size: 1.125em;
+      border: none;
+      border-radius: 0.25em;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+      transition: box-shadow 0.3s ease; 
+    }
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+    .button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2); 
+    }
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    .text-wrapper {
+      text-align: center;
+      font-size: 1.125em;
+      margin: 1em 0; 
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <img src="{{ asset('images/logo.svg') }}" alt="Your Logo" style="width: 40%; height: auto; border-radius: 10px;" />
+    @include('auth.formregister')
+  </div>
+</body>
+</html>
