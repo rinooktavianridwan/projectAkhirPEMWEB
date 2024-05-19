@@ -17,12 +17,13 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @include('layouts.navigation')
     <title>Document</title>
 </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100" style="background-color: #ead196;">
-        @include('layouts.navigation')
+        
 
         <!-- Page Content -->
         <main class="container-dashboard">
@@ -347,7 +348,7 @@
             const totalCost = duration * costPerDay;
 
             alert(
-                `Estimasi Biaya Penyewaan: Rp${totalCost.toLocaleString('id-ID')} untuk ${duration} hari. carId: ${carId.innerText}`
+                `Estimasi Biaya Penyewaan: Rp${totalCost.toLocaleString('id-ID')} untuk ${duration} hari.`
             );
 
 
