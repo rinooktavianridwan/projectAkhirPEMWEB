@@ -25,20 +25,14 @@
             <h1>Renting a car has never been this easy, Start your own journey now!</h1>
             <div class = "search">
                 <form action="/search" method="GET">
-                    <select name="search_type">
-                        <option value="max_seat">Max Seat</option>
-                    </select>
-                    <select name="search_type">
-                        <option value="max_seat">Max Seat</option>
-                    </select>
-                    <button type="submit">Search</button>
+                    <button  type="submit"><a href="{{ route('cars') }}">Mulai Pencarian Mobil</a></button>
                 </form>
             </div>
         </div>
     </section>
     <!-- /Banners -->
     <!--Footer -->
-    {{-- @include('includes/footer') --}}
+    @include('includes/footer')
     <!-- /Footer-->
 
     <!--Back to top-->
@@ -47,14 +41,6 @@
     <!--/Back to top-->
 
     <script>
-        let nav = document.querySelector("nav");
-        window.onscroll = function() {
-            if (document.documentElement.scrollTop > 20) {
-                nav.classList.add("sticky");
-            } else {
-                nav.classList.remove("sticky");
-            }
-        }
     </script>
 
 </body>
