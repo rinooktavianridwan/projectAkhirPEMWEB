@@ -15,7 +15,7 @@
     font-size: 20px;
     font-weight: bold;
     padding: 20px;
-    background-color: #ffa07a;
+    background-color: #F3EDC8;
     border-radius: 20px;
     text-align: center;
 }
@@ -43,7 +43,7 @@
     padding: 5px;
     width: fit-content;
     height: 40px;
-    background-color: #ffa07a;
+    background-color: #F3EDC8;
     border: none;
     border-radius: 10px;
     font-weight: bold;
@@ -66,7 +66,7 @@
 }
 
 .table-data table th {
-    background-color: #ffa07a;
+    background-color: #F3EDC8;
     position: sticky;
     top: 0; 
     z-index: 1;
