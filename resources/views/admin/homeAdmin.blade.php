@@ -170,6 +170,7 @@
                         <thead>
                             <th>Transaction</th>
                             <th>Date Order</th>
+                            <th>Start Date</th>
                             <th>Duration</th>
                             <th>Biaya</th>
                             <th>Status</th>
@@ -178,6 +179,7 @@
             transactions.forEach(transaction => {
                 let duration = moment(transaction.return_date).diff(moment(transaction.pickup_date), 'days');
                 let formattedDate = moment(transaction.updated_at).format('YYYY-MM-DD HH:mm:ss');
+                let formattedPickup = moment(transaction.pickup_date).format('YYYY-MM-DD');
                 tableContent += `
                     <tr>
                         <td>
@@ -188,6 +190,7 @@
                             <p>No Telepon : ${transaction.user.phone}</p>
                         </td>
                         <td>${formattedDate}</td>
+                        <td>${formattedPickup}</td>
                         <td>${duration} days</td>
                         <td>Rp${Number(transaction.transaction_value).toLocaleString()}</td>
                         <td>${status.charAt(0).toUpperCase() + status.slice(1)}</td>
