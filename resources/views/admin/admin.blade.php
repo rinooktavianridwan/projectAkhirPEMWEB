@@ -154,7 +154,7 @@
                         <div class="form-group">
                             <label>Gambar</label>
                             <img id="viewimagePreview" src="#" alt="Image Preview"
-                                style="width: 100px; height: auto; margin-top: 10px; display: none;">
+                                style="width: 200px; height: auto; margin-top: 10px; display: none;">
                         </div>
                         <div class="form-group">
                             <label>Kota</label>
