@@ -31,9 +31,7 @@
             </div>
         </main>
     </section>
-    <!--Footer -->
-    @include('layouts.footer')
-    <!-- /Footer-->
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -105,6 +103,9 @@
             loadTransactions('booked'); // Load default transactions on page load
         });
     </script>
+        <!--Footer -->
+        @include('layouts.footer')
+    <!-- /Footer-->
 </body>
 
 </html>

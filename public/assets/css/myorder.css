@@ -1,9 +1,12 @@
+body {
+    background-color: #ead196;
+}
+
 .container-order {
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 40px 150px;
-    background-color: #ead196;
+    padding: 100px 150px;
     justify-content: center;
     gap: 20px;
     text-align: center;
