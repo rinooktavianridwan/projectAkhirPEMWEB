@@ -192,7 +192,9 @@
                     <p>Mobil ini tidak tersedia untuk pemesanan.</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup
+
+                    </button>
                 </div>
             </div>
         </div>
@@ -366,6 +368,12 @@
 
                 return;
             }
+            let carStatus = $('#carStatus').text();
+            if (carStatus === 'Tidak Tersedia') {
+                $('#notificationModal').modal('show');
+                return;
+            }
+            return true ;
         }
 
 
@@ -375,9 +383,11 @@
                 alert("Anda harus login terlebih dahulu untuk melakukan pemesanan.");
                 return;
             }
-            kelengkapanData();
-            // Periksa apakah mobil tersedia
-            $('#transactionModal').modal('show');
+            if (kelengkapanData()) {
+                $('#transactionModal').modal('show');
+            }
+            
+            
         }
 
         function calculateCost() {
