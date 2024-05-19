@@ -4,24 +4,52 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Auth;
 
 //perlu auth
 
-Route::get('/get-cars', [CarController::class, 'getCars'])->middleware(['auth', 'verified']);
+Route::get('/get-cars', function () {
+    return app()->call('App\Http\Controllers\CarController@getCars');
+})->middleware(['auth', 'verified']);
 
-Route::get('/get-unique-categories', [CarController::class, 'getUniqueCategories'])->middleware(['auth', 'verified']);
+Route::get('/get-unique-categories', function () {
+    return app()->call('App\Http\Controllers\CarController@getUniqueCategories');
+})->middleware(['auth', 'verified']);
 
-Route::get('/get-unique-cities', [CarController::class, 'getUniqueCities'])->middleware(['auth', 'verified']);
+Route::get('/get-unique-cities', function () {
+    return app()->call('App\Http\Controllers\CarController@getUniqueCities');
+})->middleware(['auth', 'verified']);
 
-Route::get('/get-unique-statuses', [CarController::class, 'getUniqueStatuses'])->middleware(['auth', 'verified']);
+Route::get('/get-unique-statuses', function () {
+    return app()->call('App\Http\Controllers\CarController@getUniqueStatuses');
+})->middleware(['auth', 'verified']);
 
-Route::get('/get-unavailable-dates/{carId}', [CarController::class, 'getUnavailableDates'])->middleware(['auth', 'verified']);
+Route::get('/get-unavailable-dates/{carId}', function ($carId) {
+    return app()->call('App\Http\Controllers\CarController@getUnavailableDates', ['carId' => $carId]);
+})->middleware(['auth', 'verified']);
 
-Route::get('/get-transactions-by-user/{userId}/{status}', [TransactionController::class, 'getTransactionsByStatusUser'])->middleware(['auth', 'verified']);
+Route::get('/get-transactions-by-user/{userId}/{status}', function ($userId, $status) {
+        return app()->call('App\Http\Controllers\TransactionController@getTransactionsByStatusUser', ['userId' => $userId, 'status' => $status]);
+})->middleware(['auth', 'verified']);
 
-Route::get('/admin/transactions/{status}', [TransactionController::class, 'getTransactionsByStatus'])->middleware(['auth', 'verified'])->name('transactions.status');
+Route::get('/admin/transactions/{status}', function ($status) {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\TransactionController@getTransactionsByStatus', ['status' => $status]);
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->middleware(['auth', 'verified'])->name('transactions.status');
 
-Route::get('/admin/summary', [TransactionController::class, 'getSummary'])->middleware(['auth', 'verified'])->name('summary');
+Route::get('/admin/summary', function () {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\TransactionController@getSummary');
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->middleware(['auth', 'verified'])->name('summary');
+
 
 Route::get('/myorder', function () {
     $user = auth()->user();
@@ -44,7 +72,13 @@ Route::get('/admin', function () {
     $totalTransactionValue = \App\Models\Transaction::sum('transaction_value');
     $banyakTransaksi = \App\Models\Transaction::count();
     $transactions = \App\Models\Transaction::all();
-    return view('admin.homeAdmin', ['total' => $totalTransactionValue, 'banyakTransaksi' => $banyakTransaksi], ['transactions' => $transactions]);
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return view('admin.homeAdmin', ['total' => $totalTransactionValue, 'banyakTransaksi' => $banyakTransaksi], ['transactions' => $transactions]);
+    }
+    else {
+        return redirect()->route('dashboard');
+    }
 })->middleware(['auth', 'verified',])->name('admin');
 
 Route::get('/siadmin', function () {
@@ -52,20 +86,68 @@ Route::get('/siadmin', function () {
 })->middleware(['auth', 'verified'])->name('siadmin');
 
 Route::get('/kendaraan', function () {
-    return view('admin.admin');
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return view('admin.admin');
+    }
+    else {
+        return redirect()->route('dashboard');
+    }
 })->middleware(['auth', 'verified'])->name('kendaraan');
 
-Route::post('/add-car', [CarController::class, 'addCar'])->middleware(['auth', 'verified']);
+route::post('/add-car', function () {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\CarController@addCar');
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->middleware(['auth', 'verified']);
 
-Route::post('/edit-car/{id}', [CarController::class, 'editCar'])->middleware(['auth', 'verified']);
+route::post('/edit-car/{id}', function ($id) {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\CarController@editCar', ['id' => $id]);
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->middleware(['auth', 'verified']);
 
-Route::delete('/delete-car/{id}', [CarController::class, 'deleteCar'])->middleware(['auth', 'verified']);
+route::delete('/delete-car/{id}', function ($id) {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\CarController@deleteCar', ['id' => $id]);
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->middleware(['auth', 'verified']);
 
-Route::post('/delete-image', [CarController::class, 'deleteImage'])->middleware(['auth', 'verified']);
+route::post('/delete-image', function () {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\CarController@deleteImage');
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->middleware(['auth', 'verified']);
 
-Route::post('/save-transaction', [TransactionController::class, 'saveTransaction'])->name('save.transaction')->middleware(['auth', 'verified']);
+route::post('/save-transaction', function () {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\TransactionController@saveTransaction');
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->name('save.transaction')->middleware(['auth', 'verified']);
 
-Route::post('/transactions', [TransactionController::class, 'store'])->middleware(['auth', 'verified']);
+route::post('/transactions', function () {
+    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
+    if ($isAdmin) {
+        return app()->call('App\Http\Controllers\TransactionController@store');
+    } else {
+        return redirect()->route('dashboard');
+    }
+})->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
