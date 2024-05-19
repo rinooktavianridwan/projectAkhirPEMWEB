@@ -31,12 +31,12 @@ class TransactionController extends Controller
         $transaction = Transaction::create($validatedData);
         return response()->json($transaction); 
     }
-    // /get-booked-dates/' + carId,
-    public function getBookedDates($carId)
-    {
-        $bookedDates = Transaction::where('car_id', $carId)->get();
-        return response()->json($bookedDates);
-    } 
+    // // /get-booked-dates/' + carId,
+    // public function getBookedDates($carId)
+    // {
+    //     $bookedDates = Transaction::where('car_id', $carId)->get();
+    //     return response()->json($bookedDates);
+    // } 
 
     public function getTransactionsByStatus($status)
     {
@@ -132,8 +132,69 @@ class TransactionController extends Controller
         $transactions = Transaction::where('user_id', $userId)->get()->toArray();
         return response()->json($transactions);
 
-
-        
     }
+    // function getCalendarData($car_id)
+    // {
+    //     $transactions = Transaction::where('car_id', $car_id)->get();
+    //     $calendarData = [];
+    //     $tanggalTidakTersedia = [];
+    
+    //     foreach ($transactions as $transaction) {
+    //         // Hitung berapa hari selisih antara tanggal mulai dan tanggal selesai
+    //         $diff = $transaction->pickup_date->diffInDays($transaction->return_date);
+    //         // Ambil tanggal mulai
+    //         $start = $transaction->pickup_date->format('d');
+    //         // Ambil angka bulan
+    //         $month = $transaction->pickup_date->format('m');
+    
+    //         // Pastikan ada array untuk bulan ini, jika belum ada inisialisasi sebagai array kosong
+    //         if (!array_key_exists($month, $calendarData)) {
+    //             $calendarData[$month] = [];
+    //         }
+    
+    //         // Tambahkan semua tanggal transaksi ke dalam array
+    //         for ($i = 0; $i <= $diff; $i++) {
+    //             $date = $start + $i;
+    //             // Jika tanggal melebihi 31, atur ulang untuk kasus bulan selanjutnya
+    //             if ($date > 31) {
+    //                 // Menambahkan logika untuk handle tanggal yang melebihi batas bulan
+    //                 $next_month = sprintf('%02d', intval($month) + 1);
+    //                 if (!array_key_exists($next_month, $calendarData)) {
+    //                     $calendarData[$next_month] = [];
+    //                 }
+    //                 $calendarData[$next_month][] = sprintf('%02d', $date % 31);
+    //             } else {
+    //                 $calendarData[$month][] = sprintf('%02d', $date);
+    //             }
+    //         }
+    //     }
+
+    //     // format calendarData menjadi seperti ini '2022-12-25'
+    //     foreach ($calendarData as $month => $dates) {
+    //         foreach ($dates as $date) {
+    //             $tanggalTidakTersedia[] = '2022-' . $month . '-' . $date;
+    //         }
+    //     }
+    
+    //     return response()->json($tanggalTidakTersedia);
+    // }
+
+        public function getCalendarData($car_id)
+    {
+        $transactions = Transaction::where('car_id', $car_id)->get();
+        $unavailableDates = [];
+
+        foreach ($transactions as $transaction) {
+            $start = Carbon::parse($transaction->pickup_date);
+            $end = Carbon::parse($transaction->return_date);
+            for ($date = $start; $date->lte($end); $date->addDay()) {
+                $unavailableDates[] = $date->format('Y-m-d');
+            }
+        }
+
+        return response()->json($unavailableDates);
+    }
+
+    
      
 }

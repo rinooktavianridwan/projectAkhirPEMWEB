@@ -22,7 +22,7 @@
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100" style="background-color: #ead196;">
-        
+
 
         <!-- Page Content -->
         <main class="container-dashboard">
@@ -66,8 +66,7 @@
     </div>
 
     {{-- Modal --}}
-    <div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="carModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="carModal" tabindex="-1" role="dialog" aria-labelledby="carModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content ">
                 <div class="modal-header judul-modal">
@@ -95,8 +94,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -106,6 +104,69 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="form-group">
+                        <label for="carSelect">Pilih Mobil:</label>
+                        <select id="carSelect" class="form-control">
+                            <!-- Opsi mobil diisi oleh JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="datepicker">Pilih Tanggal:</label>
+                        <input type="text" id="datepicker" class="form-control">
+                    </div>
+                    <script>
+    $(document).ready(function() {
+        // Inisialisasi DatePicker
+        function initDatePicker(unavailableDates) {
+            $("#datepicker").datepicker({
+                beforeShowDay: function(date) {
+                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                    return [unavailableDates.indexOf(string) === -1];
+                }
+            });
+        }
+
+        // Fungsi untuk memuat tanggal yang tidak tersedia berdasarkan car_id yang dipilih
+        function fetchUnavailableDates(carId) {
+            $.ajax({
+                url: '/calendar-data/' + carId, // Sesuaikan endpoint jika perlu
+                method: 'GET',
+                success: function(data) {
+                    initDatePicker(data);
+                },
+                error: function() {
+                    alert('Data tanggal tidak dapat dimuat.');
+                }
+            });
+        }
+
+        // Handler untuk perubahan pilihan mobil
+        $('#carSelect').change(function() {
+            var selectedCarId = $(this).val();
+            fetchUnavailableDates(selectedCarId);
+        });
+
+        // Populate car options
+        $.ajax({
+            url: '/get-cars', // Sesuaikan dengan endpoint yang mengembalikan daftar mobil
+            method: 'GET',
+            success: function(data) {
+                var carSelect = $('#carSelect');
+                carSelect.empty();
+                $.each(data, function(index, car) {
+                    carSelect.append(`<option value="${car.id}">${car.name}</option>`);
+                });
+                if(data.length > 0) {
+                    fetchUnavailableDates(data[0].id); // Fetch untuk mobil pertama
+                }
+            },
+            error: function() {
+                console.error("Error fetching cars");
+            }
+        });
+    });
+</script>
+
                     <form id="transactionForm">
                         <div class="form-group">
                             <label for="pickupDate">Tanggal Pengambilan:</label>
@@ -126,8 +187,7 @@
     </div>
 
     {{-- Modal Notification --}}
-    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog"
-        aria-labelledby="notificationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="notificationModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -302,6 +362,7 @@
             };
 
         });
+
         function kelengkapanData() {
             let user = '{{ $user->id }}';
             // ambil kolong phone dari database user
@@ -393,6 +454,7 @@
         function userLoggedIn() {
             return '{{ $user->id }}' !== '';
         }
+        
     </script>
 </body>
 

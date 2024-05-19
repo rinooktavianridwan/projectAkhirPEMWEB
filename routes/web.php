@@ -156,6 +156,10 @@ Route::middleware('auth')->group(function () {
 });
 
 
+Route::get('/calendar-data/{car_id}', [TransactionController::class, 'getCalendarData']);
+
+
+
 
 
 //ga perlu
