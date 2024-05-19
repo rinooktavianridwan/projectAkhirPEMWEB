@@ -1,22 +1,38 @@
 .banner-section {
+    position: relative;
     width: 100%;
-    background-image: url("/images/logo.svg");
-    background-color: #ead196;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    text-align: center;
     color: #7d0a0a;
     font-weight: 700;
     font-family: "Roboto", sans-serif;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    justify-items: center;
-    text-align: center;
 }
+
+.banner-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url("/images/logo.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.5; /* Sesuaikan nilai ini untuk transparansi yang diinginkan */
+    background-color: rgba(213, 163, 45);
+}
+
+.banner-section > * {
+    position: relative;
+    z-index: 1;
+}
+
 
 .banner-section h1 {
     font-size: 30px;

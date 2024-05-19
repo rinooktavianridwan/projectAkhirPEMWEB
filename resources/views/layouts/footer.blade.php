@@ -1,6 +1,6 @@
 <footer class="footer-rental">
   <div class="row-footer-rental">
-      <h1>Venture Car Renting Service</h1>
+      <h1>Navigation</h1>
       <div class="list-cekFooter">
           <a href="{{ route('dashboard') }}" class="link-footer">Homepage</a>
           <a href="{{ route('aboutUs') }}" class="link-footer">About Us</a>
@@ -24,9 +24,8 @@
           <br />
       </h1>
       <span>
-          Equity Tower, Floor 19A, Sudirman Central Business District Lot 9
-          JRT.5, Jl. Jenderal Sudirman No.Kav.52-53, RT.5/RW.3, Senayan, Kec.
-          Kby. Baru, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 12190.
+      Gedung F FILKOM Universitas Brawijaya, Lantai 7, Ruangan 7.1, Jl. Veteran No.10-11, Ketawanggede, Kec. Lowokwaru, Kota Malang, Jawa Timur 65145
+
       </span>
   </div>
 </footer>
