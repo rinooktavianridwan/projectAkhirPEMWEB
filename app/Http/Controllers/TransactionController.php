@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Models\Car;
+use Carbon\Carbon;
 
 class TransactionController extends Controller
 {
@@ -64,6 +65,30 @@ class TransactionController extends Controller
 
         return response()->json($filteredTransactions->values()->toArray());
     }
+
+    public function getTransactionsByStatusUser($userId, $status)
+    {
+        $transactions = Transaction::where('user_id', $userId)->get();
+
+        $filteredTransactions = $transactions->filter(function($transaction) use ($status) {
+            $now = Carbon::now();
+            if ($status == 'ongoing') {
+                return $now->between($transaction->pickup_date, $transaction->return_date);
+            } elseif ($status == 'done') {
+                return $now->isAfter($transaction->return_date);
+            } elseif ($status == 'booked') {
+                return $now->isBefore($transaction->pickup_date);
+            }
+            return false;
+        });
+
+        // Konversi ke array numerik
+        $filteredTransactions = $filteredTransactions->values()->all();
+
+        return response()->json($filteredTransactions);
+    }
+
+
 
     public function getSummary()
     {

@@ -19,11 +19,7 @@ Route::get('/get-unique-statuses', [CarController::class, 'getUniqueStatuses']);
 Route::post('/save-transaction', [TransactionController::class, 'saveTransaction'])->name('save.transaction');
 Route::get('/get-unavailable-dates/{carId}', [CarController::class, 'getUnavailableDates']);
 
-//     function getTransactionsByUser($userId)
-// {
-//     $transactions = Transaction::where('user_id', $userId)->get();
-//     return response()->json($transactions);
-// }
+Route::get('/get-transactions-by-user/{userId}/{status}', [TransactionController::class, 'getTransactionsByStatusUser']);
 
 
 // web.php
