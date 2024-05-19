@@ -104,68 +104,60 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="carSelect">Pilih Mobil:</label>
-                        <select id="carSelect" class="form-control">
-                            <!-- Opsi mobil diisi oleh JavaScript -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="datepicker">Pilih Tanggal:</label>
-                        <input type="text" id="datepicker" class="form-control">
-                    </div>
+
+
                     <script>
-    $(document).ready(function() {
-        // Inisialisasi DatePicker
-        function initDatePicker(unavailableDates) {
-            $("#datepicker").datepicker({
-                beforeShowDay: function(date) {
-                    var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                    return [unavailableDates.indexOf(string) === -1];
-                }
-            });
-        }
+                        $(document).ready(function() {
+                            // Inisialisasi DatePicker
+                            function initDatePicker(unavailableDates) {
+                                $("#datepicker").datepicker({
+                                    beforeShowDay: function(date) {
+                                        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                                        return [unavailableDates.indexOf(string) === -1];
+                                    }
+                                });
+                            }
 
-        // Fungsi untuk memuat tanggal yang tidak tersedia berdasarkan car_id yang dipilih
-        function fetchUnavailableDates(carId) {
-            $.ajax({
-                url: '/calendar-data/' + carId, // Sesuaikan endpoint jika perlu
-                method: 'GET',
-                success: function(data) {
-                    initDatePicker(data);
-                },
-                error: function() {
-                    alert('Data tanggal tidak dapat dimuat.');
-                }
-            });
-        }
+                            // Fungsi untuk memuat tanggal yang tidak tersedia berdasarkan car_id yang dipilih
+                            function fetchUnavailableDates(carId) {
+                                $.ajax({
+                                    url: '/calendar-data/' + carId, // Sesuaikan endpoint jika perlu
+                                    method: 'GET',
+                                    success: function(data) {
+                                        initDatePicker(data);
+                                    },
+                                    error: function() {
+                                        alert('Data tanggal tidak dapat dimuat.');
+                                    }
+                                });
+                            }
 
-        // Handler untuk perubahan pilihan mobil
-        $('#carSelect').change(function() {
-            var selectedCarId = $(this).val();
-            fetchUnavailableDates(selectedCarId);
-        });
+                            // Handler untuk perubahan pilihan mobil
+                            $('#carSelect').change(function() {
+                                var selectedCarId = $(this).val();
+                                fetchUnavailableDates(selectedCarId);
+                            });
 
-        // Populate car options
-        $.ajax({
-            url: '/get-cars', // Sesuaikan dengan endpoint yang mengembalikan daftar mobil
-            method: 'GET',
-            success: function(data) {
-                var carSelect = $('#carSelect');
-                carSelect.empty();
-                $.each(data, function(index, car) {
-                    carSelect.append(`<option value="${car.id}">${car.name}</option>`);
-                });
-                if(data.length > 0) {
-                    fetchUnavailableDates(data[0].id); // Fetch untuk mobil pertama
-                }
-            },
-            error: function() {
-                console.error("Error fetching cars");
-            }
-        });
-    });
-</script>
+                            // Populate car options
+                            $.ajax({
+                                url: '/get-cars', // Sesuaikan dengan endpoint yang mengembalikan daftar mobil
+                                method: 'GET',
+                                success: function(data) {
+                                    var carSelect = $('#carSelect');
+                                    carSelect.empty();
+                                    $.each(data, function(index, car) {
+                                        carSelect.append(`<option value="${car.id}">${car.name}</option>`);
+                                    });
+                                    if (data.length > 0) {
+                                        fetchUnavailableDates(data[0].id); // Fetch untuk mobil pertama
+                                    }
+                                },
+                                error: function() {
+                                    console.error("Error fetching cars");
+                                }
+                            });
+                        });
+                    </script>
 
                     <form id="transactionForm">
                         <div class="form-group">
@@ -385,12 +377,6 @@
             }
             kelengkapanData();
             // Periksa apakah mobil tersedia
-            let carStatus = $('#carStatus').text();
-            if (carStatus === 'Tidak Tersedia') {
-                $('#notificationModal').modal('show');
-                return;
-            }
-
             $('#transactionModal').modal('show');
         }
 
@@ -403,9 +389,17 @@
             const maxPickupDate = new Date();
             maxPickupDate.setDate(maxPickupDate.getDate() + 3); // Tambah 3 hari dari sekarang
             if (new Date(pickupDate) > maxPickupDate) {
-                alert("Booking tidak boleh lebih dari 3 hari dari sekarang.");
+                alert("Tanggal sudah tidak tersedia, Silakah pilih tanggal lain.");
                 return;
             }
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Set waktu hari ini ke tengah malam
+
+            if (new Date(pickupDate) < today) {
+                alert("Tanggal pengambilan harus setelah tanggal hari ini.");
+                return;
+            }
+
             if (!pickupDate || !returnDate || new Date(pickupDate) >= new Date(returnDate)) {
                 alert("Tanggal pengembalian harus setelah tanggal pengambilan.");
                 return;
@@ -418,9 +412,7 @@
                 '.'));
             const totalCost = duration * costPerDay;
 
-            alert(
-                `Estimasi Biaya Penyewaan: Rp${totalCost.toLocaleString('id-ID')} untuk ${duration} hari.`
-            );
+
 
 
             let formData = new FormData();
@@ -454,7 +446,6 @@
         function userLoggedIn() {
             return '{{ $user->id }}' !== '';
         }
-        
     </script>
 </body>
 
