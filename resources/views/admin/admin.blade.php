@@ -136,37 +136,35 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="carModalLabel">Car Details</h5>
+                    <h5 class="modal-title">Car Details</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="carForm" enctype="multipart/form-data">
+                    <div id="viewcarDetails">
                         <div class="form-group">
-                            <label for="name">Nama Mobil</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <label>Nama Mobil</label>
+                            <p id="viewname" class="form-control"></p>
                         </div>
                         <div class="form-group">
-                            <label for="category">Kategori</label>
-                            <input type="text" class="form-control" id="category" name="category" required>
+                            <label>Kategori</label>
+                            <p id="viewcategory" class="form-control"></p>
                         </div>
                         <div class="form-group">
-                            <label for="image">Gambar</label>
-                            <input type="file" class="form-control" id="image" name="image"
-                                accept="image/png, image/jpeg">
-                            <img id="imagePreview" src="#" alt="Image Preview"
-                                style="display: none; width: 100px; height: auto; margin-top: 10px;">
+                            <label>Gambar</label>
+                            <img id="viewimagePreview" src="#" alt="Image Preview"
+                                style="width: 100px; height: auto; margin-top: 10px; display: none;">
                         </div>
                         <div class="form-group">
-                            <label for="city">Kota</label>
-                            <input type="text" class="form-control" id="city" name="city" required>
+                            <label>Kota</label>
+                            <p id="viewcity" class="form-control"></p>
                         </div>
                         <div class="form-group">
-                            <label for="price">Harga</label>
-                            <input type="text" class="form-control" id="price" name="price" required>
+                            <label>Harga</label>
+                            <p id="viewprice" class="form-control"></p>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -336,17 +334,20 @@
                 let car = cars.find(car => car.id === idCars);
                 if (car) {
                     console.log('Car data:', car); // Debugging line
-                    document.getElementById('name').value = car.name;
-                    document.getElementById('category').value = car.category;
-                    document.getElementById('city').value = car.city;
-                    document.getElementById('price').value = car.price;
+
+                    // Set text content for labels
+                    document.getElementById('viewname').textContent = car.name;
+                    document.getElementById('viewcategory').textContent = car.category;
+                    document.getElementById('viewcity').textContent = car.city;
+                    document.getElementById('viewprice').textContent = car.price;
 
                     // Handle image preview
+                    console.log('Image:', car.image);
                     if (car.image) {
-                        document.getElementById('imagePreview').src = car.image;
-                        document.getElementById('imagePreview').style.display = 'block';
+                        document.getElementById('viewimagePreview').src = `/storage/${car.image}`;
+                        document.getElementById('viewimagePreview').style.display = 'block';
                     } else {
-                        document.getElementById('imagePreview').style.display = 'none';
+                        document.getElementById('viewimagePreview').style.display = 'none';
                     }
 
                     // Show the modal
@@ -355,6 +356,8 @@
                     alert('Car not found');
                 }
             };
+
+
 
             // Image preview function
             $('#image').change(function() {
