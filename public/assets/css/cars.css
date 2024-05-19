@@ -22,7 +22,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    row-gap: 200px;
     column-gap: 50px;
     padding-bottom: 250px;
     border-radius: 20px;
@@ -41,6 +40,13 @@ body {
     height: 40px;
     gap: 10px;
     font-size: 30px;
+}
+
+.search{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 10px;
 }
 
 .searching-cars {
@@ -282,4 +288,13 @@ body {
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+}
+
+.status-footer{
+    position: absolute;
+    left: 5px;
+    background-color: black;
+    width: 25px;
+    border-radius: 20PX;
+    text-align: center;
 }

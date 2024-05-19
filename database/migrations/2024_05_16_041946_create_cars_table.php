@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('category');  // Kategori
             $table->string('image');  // gambar
             $table->string('city');  // kota
-            $table->string('status');  // status
+            $table->string('status')->default('Tersedia');  // status dengan nilai default 'Tersedia'
             $table->decimal('price', 10, 2);  // Harga
             $table->timestamps();
         });
@@ -31,3 +31,4 @@ return new class extends Migration
         Schema::dropIfExists('cars');
     }
 };
+

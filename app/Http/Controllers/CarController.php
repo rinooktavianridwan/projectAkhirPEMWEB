@@ -27,6 +27,11 @@ class CarController extends Controller
         return response()->json($cities);
     }
 
+    public function getUniqueStatuses(){
+        $statuses = Car::distinct()->pluck('status');
+        return response()->json($statuses);
+    }
+
     public function addCar(Request $request)
     {
         $request->validate([
@@ -34,9 +39,11 @@ class CarController extends Controller
             'category' => 'required',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'city' => 'required',
-            'status' => 'required',
+            'status' => 'nullable',
             'price' => 'required',
         ]);
+
+        $status = $request->status ?? 'Tersedia';
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('cars', 'public');
@@ -47,7 +54,7 @@ class CarController extends Controller
             'category' => $request->category,
             'image' => $imagePath,
             'city' => $request->city,
-            'status' => $request->status,
+            'status' => $status,
             'price' => $request->price,
         ]);
 
@@ -57,6 +64,7 @@ class CarController extends Controller
     public function editCar(Request $request, $id)
     {
         $car = Car::findOrFail($id);
+        $imageName = $car->image;
         // print data json update pada console
         Log::info($request->all());
         // Validasi data
@@ -64,7 +72,6 @@ class CarController extends Controller
             'name' => 'sometimes|string|max:255',
             'category' => 'sometimes|string|max:255',
             'city' => 'sometimes|string|max:255',
-            'status' => 'sometimes|string|max:50',
             'price' => 'sometimes|numeric',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
         ]);
@@ -75,8 +82,8 @@ class CarController extends Controller
             $validatedData['image'] = $imagePath;
 
             // Hapus gambar lama jika ada
-            if (Storage::disk('public')->exists($car->image)) {
-                Storage::disk('public')->delete($car->image);
+            if (Storage::disk('public')->exists($imageName)) {
+                Storage::disk('public')->delete($imageName);
             }
         }
 

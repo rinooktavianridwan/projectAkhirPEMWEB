@@ -23,6 +23,10 @@ class Car extends Model
         'price',
     ];
 
+    protected $attributes = [
+        'status' => 'Tersedia',
+    ];
+
     /**
      * Get the full path to the car's image.
      *

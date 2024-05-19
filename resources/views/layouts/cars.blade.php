@@ -44,6 +44,13 @@
                                     <!-- Opsi kota akan diisi dengan data dari database -->
                                 </select>
                             </div>
+                            <div class="cari-mobil">
+                                <h1>Status</h1>
+                                <select name="status" id="status">
+                                    <option value="">Semua Status</option>
+                                    <!-- Opsi kategori akan diisi dengan data dari database -->
+                                </select>
+                            </div>
                         </div>
                         <div class="searching-cars">
                             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 width-car">
@@ -74,7 +81,7 @@
                         <img id="carImage" src="" alt="Car Image">
                     </div>
                     <!-- biarin id sembunyi  JANGAN DI HAPUS-->
-                    <p style="display: none;"><strong>id:</strong> <span id="id"></span></p> 
+                    <p style="display: none;"><strong>id:</strong> <span id="id"></span></p>
                     <p><strong>Nama:</strong> <span id="carName"></span></p>
                     <p><strong>Kategori:</strong> <span id="carCategory"></span></p>
                     <p><strong>Kota:</strong> <span id="carCity"></span></p>
@@ -88,45 +95,66 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="transactionModalLabel">Pemesanan Kendaraan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="transactionForm">
-                    <div class="form-group">
-                        <label for="pickupDate">Tanggal Pengambilan:</label>
-                        <input type="date" id="pickupDate" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="returnDate">Tanggal Pengembalian:</label>
-                        <input type="date" id="returnDate" class="form-control" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="button" class="btn btn-primary" onclick="calculateCost()">Hitung Biaya</button>
+    <div class="modal fade" id="transactionModal" tabindex="-1" role="dialog" aria-labelledby="transactionModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalLabel">Pemesanan Kendaraan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="transactionForm">
+                        <div class="form-group">
+                            <label for="pickupDate">Tanggal Pengambilan:</label>
+                            <input type="date" id="pickupDate" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="returnDate">Tanggal Pengembalian:</label>
+                            <input type="date" id="returnDate" class="form-control" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary" onclick="calculateCost()">Hitung Biaya</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+
+    {{-- Modal Notification --}}
+    <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog"
+        aria-labelledby="notificationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="notificationModalLabel">Notifikasi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Mobil ini tidak tersedia untuk pemesanan.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
-        
         $(document).ready(function() {
             let cars = [];
             let uniqueCategories = [];
             let uniqueCities = [];
-            
+
 
             $.ajaxSetup({
                 headers: {
@@ -142,28 +170,32 @@
                 let carList = $('#car-loop');
                 carList.empty();
                 $.each(cars, function(index, car) {
+                    let statusColor = car.status === 'Tersedia' ? 'green' :
+                        'red'; // Tentukan warna berdasarkan status
                     carList.append(`
-                <div class="shell">
-                    <div class="wsk-cp-product">
-                        <div class="wsk-cp-img">
-                            <img src="/storage/${car.image}" alt="${car.name}" class="img-responsive" />
+                        <div class="shell">
+                            <div class="wsk-cp-product">
+                                <div class="wsk-cp-img">
+                                    <img src="/storage/${car.image}" alt="${car.name}" class="img-responsive" />
+                                </div>
+                                <div class="wsk-cp-text">
+                                    <div class="category">
+                                        <span><button class="" onclick="viewCar(this)" data-car-id="${car.id}">More</button></span>
+                                    </div>
+                                    <div class="title-product">
+                                        <h3>${car.city}</h3>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="status-footer" style="background-color: ${statusColor};">S</div>
+                                        <div class="wcf-left"><span class="price">Rp${car.price}</span></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="wsk-cp-text">
-                            <div class="category">
-                                <span><button class="" onclick="viewCar(${index})">More</button></span>
-                            </div>
-                            <div class="title-product">
-                                <h3>${car.city}</h3>
-                            </div>
-                            <div class="card-footer">
-                                <div class="wcf-left"><span class="price">Rp${car.price}</span></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `);
+                    `);
                 });
             }
+
 
             // Fetch cars from server
             function fetchCars() {
@@ -210,6 +242,19 @@
                 });
             }
 
+            function fetchUniqueStatus() {
+                $.ajax({
+                    url: '/get-unique-statuses',
+                    method: 'GET',
+                    success: function(data) {
+                        populateOptions('status', data);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching unique statuses: ", status, error);
+                    }
+                });
+            }
+
             // Populate select options
             function populateOptions(elementId, data) {
                 let selectElement = $(`select[name="${elementId}"]`);
@@ -220,27 +265,32 @@
                 });
             }
 
-            // Fetch initial data
+            // Fetch initial data   
             fetchCars();
             fetchUniqueCategories();
             fetchUniqueCities();
+            fetchUniqueStatus();
 
             // Event handler for category and city select
-            $('select[name="kategori"], select[name="kota"]').on('change', function() {
+            $('select[name="kategori"], select[name="kota"], select[name="status"]').on('change', function() {
                 let selectedCategory = $('select[name="kategori"]').val();
                 let selectedCity = $('select[name="kota"]').val();
+                let selectedStatus = $('select[name="status"]').val();
 
                 let filteredCars = cars.filter(car => {
                     return (selectedCategory === '' || car.category === selectedCategory) &&
-                        (selectedCity === '' || car.city === selectedCity);
+                        (selectedCity === '' || car.city === selectedCity) &&
+                        (selectedStatus === '' || car.status ===
+                            selectedStatus); // Tambahkan filter berdasarkan status
                 });
 
                 updateCarList(filteredCars);
             });
 
             // View Car Function
-            window.viewCar = function(index) {
-                let car = cars[index];
+            window.viewCar = function(button) {
+                let carId = $(button).data('car-id');
+                let car = cars.find(car => car.id === carId);
                 $('#id').text(car.id);
                 $('#carName').text(car.name);
                 $('#carCategory').text(car.category);
@@ -250,9 +300,10 @@
                 $('#carPrice').text('Rp' + car.price.toLocaleString('id-ID'));
                 $('#carModal').modal('show');
             };
+
         });
 
-        
+
 
         function openTransactionModal() {
             // Pastikan pengguna sudah login
@@ -260,15 +311,29 @@
                 alert("Anda harus login terlebih dahulu untuk melakukan pemesanan.");
                 return;
             }
+
+            // Periksa apakah mobil tersedia
+            let carStatus = $('#carStatus').text();
+            if (carStatus === 'Tidak Tersedia') {
+                $('#notificationModal').modal('show');
+                return;
+            }
+
             $('#transactionModal').modal('show');
         }
-        
-        
+
+
         function calculateCost() {
-            
-            const carId =document.getElementById('id');
+
+            const carId = document.getElementById('id');
             const pickupDate = document.getElementById('pickupDate').value;
             const returnDate = document.getElementById('returnDate').value;
+            const maxPickupDate = new Date();
+            maxPickupDate.setDate(maxPickupDate.getDate() + 3); // Tambah 3 hari dari sekarang
+            if (new Date(pickupDate) > maxPickupDate) {
+                alert("Booking tidak boleh lebih dari 3 hari dari sekarang.");
+                return;
+            }
             if (!pickupDate || !returnDate || new Date(pickupDate) >= new Date(returnDate)) {
                 alert("Tanggal pengembalian harus setelah tanggal pengambilan.");
                 return;
@@ -277,12 +342,15 @@
             const start = new Date(pickupDate);
             const end = new Date(returnDate);
             const duration = Math.ceil((end - start) / msPerDay);
-            const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace(',', '.'));
+            const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace(',',
+                '.'));
             const totalCost = duration * costPerDay;
-            
-            alert(`Estimasi Biaya Penyewaan: Rp${totalCost.toLocaleString('id-ID')} untuk ${duration} hari. carId: ${carId.innerText}`);
 
-            
+            alert(
+                `Estimasi Biaya Penyewaan: Rp${totalCost.toLocaleString('id-ID')} untuk ${duration} hari. carId: ${carId.innerText}`
+            );
+
+
             let formData = new FormData();
             formData.append('user_id', '{{ $user->id }}');
             formData.append('car_id', carId.innerText);
@@ -301,6 +369,7 @@
                 success: function(data) {
                     alert("Pemesanan berhasil!");
                     $('#transactionModal').modal('hide');
+                    location.reload();
                 },
                 error: function(xhr, status, error) {
                     console.error("Error submitting transaction: ", status, error);
@@ -308,21 +377,11 @@
                 }
             });
 
-
-
-
-
-
-
-
-
-
         }
 
         function userLoggedIn() {
             return '{{ $user->id }}' !== '';
         }
-
     </script>
 </body>
 

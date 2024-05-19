@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <title>AdminHub</title>
-
 </head>
 
 <body>
@@ -34,7 +33,7 @@
             <li>
                 <a href="{{ route('dashboard') }}">
                     <i class='bx bxs-group'></i>
-                    <span class="text">dashboard</span>
+                    <span class="text">Dashboard</span>
                 </a>
             </li>
             <li>
@@ -55,29 +54,26 @@
             <div class="head-title">
                 <div class="left">
                     <h1>Dashboard</h1>
-                    <ul class="breadcrumb">
-                        <li>
-                            <a href="#">Dashboard</a>
-                        </li>
-                        <li><i class='bx bx-chevron-right'></i></li>
-                        <li>
-                            <a class="active" href="#">Home</a>
-                        </li>
-                    </ul>
                 </div>
-                <a href="#" class="btn-download">
-                    <i class='bx bxs-cloud-download'></i>
-                    <span class="text">Download PDF</span>
-                </a>
             </div>
 
             <ul class="box-info">
-                <li>
-                    <i class='bx bxs-calendar-check'></i>
-                    <span class="text">
-                        <h3> {{ $banyakTransaksi }}</h3>
-                        <p>New Order</p>
-                    </span>
+                <li class="column-sales">
+                    <div class="detail-sales">
+                        <i class='bx bxs-calendar-check'></i>
+                        <span class="text">
+                            <h3 id="total-orders">0</h3>
+                            <p>Total Orders</p>
+                        </span>
+                    </div>
+                    <div class="detail-sales">
+                        <span class="text">
+                            <h3>Detail Orders</h3>
+                            <h6>Booked: <span id="booked-orders">0</span></h6>
+                            <h6>Ongoing: <span id="ongoing-orders">0</span></h6>
+                            <h6>Done: <span id="done-orders">0</span></h6>
+                        </span>
+                    </div>
                 </li>
                 <li>
                     <i class='bx bxs-group'></i>
@@ -86,21 +82,89 @@
                         <p>Visitors</p>
                     </span>
                 </li>
-                <li>
-                    <i class='bx bxs-dollar-circle'></i>
-                    <span class="text">
-
-                        <h3>Rp{{ number_format($total, 0, ',', '.') }}</h3>
-                        <p>Total Sales</p>
-                    </span>
+                <li class="column-sales">
+                    <div class="detail-sales">
+                        <i class='bx bxs-dollar-circle'></i>
+                        <span class="text">
+                            <h3 id="total-sales">Rp0</h3>
+                            <p>Total Sales</p>
+                        </span>
+                    </div>
+                    <div class="detail-sales">
+                        <span class="text">
+                            <h3>Detail Sales</h3>
+                            <h6>Booked: <span id="booked-sales">Rp0</span></h6>
+                            <h6>Ongoing: <span id="ongoing-sales">Rp0</span></h6>
+                            <h6>Done: <span id="done-sales">Rp0</span></h6>
+                        </span>
+                    </div>
                 </li>
             </ul>
 
+            <div class="transaction-filter">
+                <div>
+                    <button class="btn btn-primary" onclick="loadTransactions('booked')">Booked Orders</button>
+                    <button class="btn btn-primary" onclick="loadTransactions('ongoing')">Ongoing Orders</button>
+                    <button class="btn btn-primary" onclick="loadTransactions('done')">Completed Orders</button>
+                </div>
+                <div class="search">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search for cars">
+                </div>
+            </div>
 
-            <div class="table-data">
+            <div class="table-data" id="transaction-table">
+                <!-- Tabel transaksi akan dimuat di sini menggunakan AJAX -->
+            </div>
+        </main>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+        let filterStatus = 'booked'; // Variabel global untuk menyimpan status filter
+
+        function loadSummary() {
+            $.ajax({
+                url: '/admin/summary',
+                method: 'GET',
+                success: function(summary) {
+                    $('#total-orders').text(summary.total_orders);
+                    $('#total-sales').text('Rp' + Number(summary.total_sales).toLocaleString());
+
+                    $('#booked-orders').text(summary.booked.count);
+                    $('#booked-sales').text('Rp' + Number(summary.booked.sales).toLocaleString());
+
+                    $('#ongoing-orders').text(summary.ongoing.count);
+                    $('#ongoing-sales').text('Rp' + Number(summary.ongoing.sales).toLocaleString());
+
+                    $('#done-orders').text(summary.done.count);
+                    $('#done-sales').text('Rp' + Number(summary.done.sales).toLocaleString());
+                },
+                error: function() {
+                    alert('Failed to fetch summary');
+                }
+            });
+        }
+
+        function loadTransactions(status) {
+            filterStatus = status; // Update variabel global dengan status yang dipilih
+            $.ajax({
+                url: `/admin/transactions/${status}`,
+                method: 'GET',
+                success: function(data) {
+                    renderTransactionTable(data, status);
+                },
+                error: function() {
+                    alert('Failed to fetch transactions');
+                }
+            });
+        }
+
+        function renderTransactionTable(transactions, status) {
+            let tableContent = `
                 <div class="order">
                     <div class="head">
-                        <h3>Recent Orders</h3>
+                        <h3>${status.charAt(0).toUpperCase() + status.slice(1)} Orders</h3>
                     </div>
                     <table>
                         <thead>
@@ -110,43 +174,69 @@
                             <th>Biaya</th>
                             <th>Status</th>
                         </thead>
-                        <tbody>
-                            <!-- tabel recent order -->
-                            @foreach ($transactions as $transaction)
-                                <tr>
-                                    <td>
-                                        <img class="img-car-admin" src="/storage/{{ $transaction->car->image }}"
-                                            alt="user" />
-                                        <p>Id Transaksi : {{ $transaction->id }}</p>
-                                        <p>Kategori Mobil : {{ $transaction->car->kategori }}</p>
-                                        <p>Kota : {{ $transaction->car->city }}</p>
-                                        <p>Nama Pemesan : {{ $transaction->user->name }}</p>
-                                        <p>No Telepon : {{ $transaction->user->phone }}</p>
-                                    </td>
-                                    <td>{{ $transaction->updated_at }}</td>
-                                    <td>{{ \Carbon\Carbon::parse($transaction->pickup_date)->diffInDays(\Carbon\Carbon::parse($transaction->return_date)) }} days</td>
-                                    <td>Rp{{ number_format($transaction->transaction_value, 0, ',', '.') }}</td>
-                                    <td>
-                                        @if (now() < $transaction->pickup_date)
-                                            Booked
-                                        @elseif (now() >= $transaction->pickup_date && now() < $transaction->return_date)
-                                            Sedang Digunakan
-                                        @else
-                                            Done
-                                        @endif
-                                    </td>
-                                </tr>
-                            @endforeach
+                        <tbody>`;
+            transactions.forEach(transaction => {
+                let duration = moment(transaction.return_date).diff(moment(transaction.pickup_date), 'days');
+                let formattedDate = moment(transaction.updated_at).format('YYYY-MM-DD HH:mm:ss');
+                tableContent += `
+                    <tr>
+                        <td>
+                            <img class="img-car-admin" src="/storage/${transaction.car.image}" alt="car" />
+                            <p>Kategori Mobil : ${transaction.car.category}</p>
+                            <p>Kota : ${transaction.car.city}</p>
+                            <p>Nama Pemesan : ${transaction.user.name}</p>
+                            <p>No Telepon : ${transaction.user.phone}</p>
+                        </td>
+                        <td>${formattedDate}</td>
+                        <td>${duration} days</td>
+                        <td>Rp${Number(transaction.transaction_value).toLocaleString()}</td>
+                        <td>${status.charAt(0).toUpperCase() + status.slice(1)}</td>
+                    </tr>`;
+            });
+            tableContent += `
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </main>
+                </div>`;
+            $('#transaction-table').html(tableContent);
+        }
 
+        function filterTransactions(searchKeyword) {
+            $.ajax({
+                url: `/admin/transactions/${filterStatus}`,
+                method: 'GET',
+                success: function(data) {
+                    let filteredTransactions = data.filter(transaction => {
+                        return transaction.car.category.toLowerCase().includes(searchKeyword) ||
+                            transaction.car.city.toLowerCase().includes(searchKeyword) ||
+                            transaction.user.name.toLowerCase().includes(searchKeyword) ||
+                            (transaction.user.phone && transaction.user.phone.toLowerCase().includes(
+                                searchKeyword)) ||
+                            transaction.updated_at.toLowerCase().includes(searchKeyword);
+                    });
+                    renderTransactionTable(filteredTransactions, filterStatus);
+                },
+                error: function() {
+                    alert('Failed to fetch transactions');
+                }
+            });
+        }
 
-    </section>
+        $(document).ready(function() {
+            loadSummary();
+            loadTransactions(filterStatus);
 
+            $('#searchInput').on('input', function() {
+                let searchKeyword = $(this).val().toLowerCase();
+                filterTransactions(searchKeyword);
+            });
 
+            $('#searchInput').on('keypress', function(e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

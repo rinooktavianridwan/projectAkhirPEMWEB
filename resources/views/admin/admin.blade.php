@@ -35,7 +35,7 @@
             <li>
                 <a href="{{ route('dashboard') }}">
                     <i class='bx bxs-group'></i>
-                    <span class="text">dashboard</span>
+                    <span class="text">Dashboard</span>
                 </a>
             </li>
             <li>
@@ -55,8 +55,12 @@
         <main class="main-pad">
             <div class="admin-section">
                 <h1>Cars Section</h1>
-                <div>
+                <div class="header-tabel-admin">
                     <button id="addButton" class="btn btn-primary">Add New Car</button>
+                    <div class="search">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Search for cars">
+                        <button class="btn btn-primary">Search</button>
+                    </div>
                 </div>
             </div>
             <div class="table-responsive">
@@ -111,13 +115,6 @@
                         <div class="form-group">
                             <label for="city">Kota</label>
                             <input type="text" class="form-control" id="city" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="status">Status</label>
-                            <select class="form-control" id="status" required>
-                                <option value="Tersedia">Tersedia</option>
-                                <option value="Tidak Tersedia">Tidak Tersedia</option>
-                            </select>
                         </div>
                         <div class="form-group">
                             <label for="price">Harga</label>
@@ -196,7 +193,6 @@
                     formData.append('category', $('#category').val());
                     formData.append('image', $('#image')[0].files[0]);
                     formData.append('city', $('#city').val());
-                    formData.append('status', $('#status').val());
                     formData.append('price', $('#price').val());
 
                     $.ajax({
@@ -226,29 +222,21 @@
                 $('#category').val(car.category);
                 $('#city').val(car.city);
                 $('#imagePreview').attr('src', '/storage/' + car.image);
-                $('#status').val(car.status);
                 $('#price').val(car.price);
                 $('#carModal').modal('show');
                 $('#saveButton').off('click').on('click', function() {
                     let formData = new FormData();
                     formData.append('name', $('#name').val());
-                    console.log("Name:", $('#name').val());
                     formData.append('category', $('#category').val());
-                    console.log("category:", $('#category').val());
                     if ($('#image')[0].files[0]) {
                         formData.append('image', $('#image')[0].files[0]);
                     }
                     formData.append('city', $('#city').val());
-                    console.log("city:", $('#city').val());
-                    formData.append('status', $('#status').val());
-                    console.log("status:", $('#status').val());
                     formData.append('price', $('#price').val());
-                    console.log("price:", $('#price').val());   
-                    console.log([...formData.entries()]);
 
 
                     $.ajax({
-                        
+
                         url: '/edit-car/' + car.id,
                         method: 'POST',
                         data: formData,
@@ -322,6 +310,21 @@
                     $('#imagePreview').hide();
                 }
             });
+
+            // Tambahkan event listener untuk input pencarian
+            $('#searchInput').on('input', function() {
+                let searchKeyword = $(this).val()
+            .toLowerCase(); // Ambil nilai input pencarian dan ubah menjadi huruf kecil
+                let filteredCars = cars.filter(function(car) {
+                    // Lakukan filter terhadap data mobil berdasarkan kata kunci pencarian
+                    return car.name.toLowerCase().includes(searchKeyword) ||
+                        car.category.toLowerCase().includes(searchKeyword) ||
+                        car.city.toLowerCase().includes(searchKeyword) ||
+                        car.price.toString().includes(searchKeyword);
+                });
+                updateTable(filteredCars); // Update tabel dengan data mobil yang telah difilter
+            });
+
         });
     </script>
 

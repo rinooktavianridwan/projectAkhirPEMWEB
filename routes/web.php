@@ -14,12 +14,21 @@ Route::post('/delete-image', [CarController::class, 'deleteImage']);
 
 Route::get('/get-unique-categories', [CarController::class, 'getUniqueCategories']);
 Route::get('/get-unique-cities', [CarController::class, 'getUniqueCities']);
+Route::get('/get-unique-statuses', [CarController::class, 'getUniqueStatuses']);
 
 Route::post('/save-transaction', [TransactionController::class, 'saveTransaction'])->name('save.transaction');
 Route::get('/get-unavailable-dates/{carId}', [CarController::class, 'getUnavailableDates']);
 
 
 Route::get('/get-transactions', 'TransactionController@getTransactions');
+
+// web.php
+Route::get('/admin/transactions/{status}', [TransactionController::class, 'getTransactionsByStatus'])->name('transactions.status');
+
+// summary
+Route::get('/admin/summary', [TransactionController::class, 'getSummary'])->name('summary');
+
+
 
 // buat /transactions
 Route::post('/transactions', [TransactionController::class, 'store']);
