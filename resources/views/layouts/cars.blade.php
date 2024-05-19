@@ -302,7 +302,18 @@
             };
 
         });
+        function kelengkapanData() {
+            let user = '{{ $user->id }}';
+            // ambil kolong phone dari database user
+            let phone = '{{ $user->phone }}';
+            if (phone === '') {
+                alert("Anda harus mengisi data terlebih dahulu.");
+                // ketike tombol allert di klik maka akan diarahkan ke halaman profile
+                window.location.href = '/profile';
 
+                return;
+            }
+        }
 
 
         function openTransactionModal() {
@@ -311,7 +322,7 @@
                 alert("Anda harus login terlebih dahulu untuk melakukan pemesanan.");
                 return;
             }
-
+            kelengkapanData();
             // Periksa apakah mobil tersedia
             let carStatus = $('#carStatus').text();
             if (carStatus === 'Tidak Tersedia') {
