@@ -380,68 +380,76 @@
             $('#transactionModal').modal('show');
         }
 
-
         function calculateCost() {
+    const carId = document.getElementById('id').innerText; // Make sure this is getting the correct ID
+    const pickupDate = document.getElementById('pickupDate').value;
+    const returnDate = document.getElementById('returnDate').value;
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to midnight today
 
-            const carId = document.getElementById('id');
-            const pickupDate = document.getElementById('pickupDate').value;
-            const returnDate = document.getElementById('returnDate').value;
-            const maxPickupDate = new Date();
-            maxPickupDate.setDate(maxPickupDate.getDate() + 3); // Tambah 3 hari dari sekarang
-            if (new Date(pickupDate) > maxPickupDate) {
-                alert("Tanggal sudah tidak tersedia, Silakah pilih tanggal lain.");
-                return;
-            }
-            const today = new Date();
-            today.setHours(0, 0, 0, 0); // Set waktu hari ini ke tengah malam
+    // Checks for date logic before the AJAX call
+    if (!pickupDate || !returnDate || new Date(pickupDate) >= new Date(returnDate)) {
+        alert("Tanggal pengembalian harus setelah tanggal pengambilan.");
+        return;
+    }
 
-            if (new Date(pickupDate) < today) {
-                alert("Tanggal pengambilan harus setelah tanggal hari ini.");
-                return;
-            }
+    if (new Date(pickupDate) < today) {
+        alert("Tanggal pengambilan harus setelah tanggal hari ini.");
+        return;
+    }
 
-            if (!pickupDate || !returnDate || new Date(pickupDate) >= new Date(returnDate)) {
-                alert("Tanggal pengembalian harus setelah tanggal pengambilan.");
-                return;
-            }
-            const msPerDay = 86400000;
-            const start = new Date(pickupDate);
-            const end = new Date(returnDate);
-            const duration = Math.ceil((end - start) / msPerDay);
-            const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace(',',
-                '.'));
-            const totalCost = duration * costPerDay;
-
-
-
-
-            let formData = new FormData();
-            formData.append('user_id', '{{ $user->id }}');
-            formData.append('car_id', carId.innerText);
-            formData.append('pickup_date', pickupDate);
-            formData.append('return_date', returnDate);
-            formData.append('transaction_value', totalCost); // Pastikan nama field ini sesuai dengan yang di backend
-
-            formData.append('_token', '{{ csrf_token() }}'); // Menambahkan CSRF token
-
-            $.ajax({
-                url: '/transactions',
-                method: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(data) {
-                    alert("Pemesanan berhasil!");
-                    $('#transactionModal').modal('hide');
-                    location.reload();
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error submitting transaction: ", status, error);
-                    alert("Terjadi kesalahan saat melakukan pemesanan.");
-                }
-            });
-
+    // Fetch the disabled dates then proceed with the cost calculation
+    $.get('/calendar-data/' + carId, function(disabledDates) {
+        // Now perform the checks with disabledDates loaded
+        if (disabledDates.includes(pickupDate) || disabledDates.includes(returnDate)) {
+            alert('Tanggal pengambilan atau pengembalian tidak tersedia.');
+            return;
         }
+
+        // Continue with your cost calculation here
+        const msPerDay = 86400000;
+        const start = new Date(pickupDate);
+        const end = new Date(returnDate);
+        const duration = Math.ceil((end - start) / msPerDay);
+        const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace('.', ''));
+        const totalCost = duration * costPerDay;
+
+        if (confirm(`Biaya total pemesanan adalah Rp${totalCost.toLocaleString('id-ID')}. Lanjutkan transaksi?`)) {
+            performTransaction(carId, pickupDate, returnDate, totalCost);
+        } else {
+            alert("Transaksi dibatalkan.");
+        }
+    });
+}
+
+function performTransaction(carId, pickupDate, returnDate, totalCost) {
+    let formData = new FormData();
+    formData.append('user_id', '{{ $user->id }}');
+    formData.append('car_id', carId);
+    formData.append('pickup_date', pickupDate);
+    formData.append('return_date', returnDate);
+    formData.append('transaction_value', totalCost);
+
+    formData.append('_token', '{{ csrf_token() }}'); // CSRF token addition
+
+    $.ajax({
+        url: '/transactions',
+        method: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            alert("Pemesanan berhasil!");
+            $('#transactionModal').modal('hide');
+            location.reload();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error submitting transaction: ", status, error);
+            alert("Terjadi kesalahan saat melakukan pemesanan.");
+        }
+    });
+}
+
 
         function userLoggedIn() {
             return '{{ $user->id }}' !== '';
