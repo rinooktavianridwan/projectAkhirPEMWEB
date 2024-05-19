@@ -72,6 +72,7 @@ class CarController extends Controller
             'name' => 'sometimes|string|max:255',
             'category' => 'sometimes|string|max:255',
             'city' => 'sometimes|string|max:255',
+            'status' => 'sometimes|string|max:255',
             'price' => 'sometimes|numeric',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
         ]);

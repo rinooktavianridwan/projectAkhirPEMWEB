@@ -113,6 +113,13 @@
                                 style="display: none; width: 100px; height: auto; margin-top: 10px;">
                         </div>
                         <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status">
+                                <option value="Tersedia">Tersedia</option>
+                                <option value="Tidak Tersedia">Tidak Tersedia</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="city">Kota</label>
                             <input type="text" class="form-control" id="city" required>
                         </div>
@@ -265,6 +272,7 @@
                 $('#category').val(car.category);
                 $('#city').val(car.city);
                 $('#imagePreview').attr('src', '/storage/' + car.image);
+                $('#status').val(car.status);
                 $('#price').val(car.price);
                 $('#carModal').modal('show');
                 $('#saveButton').off('click').on('click', function() {
@@ -274,6 +282,7 @@
                     if ($('#image')[0].files[0]) {
                         formData.append('image', $('#image')[0].files[0]);
                     }
+                    formData.append('status', $('#status').val());
                     formData.append('city', $('#city').val());
                     formData.append('price', $('#price').val());
 
