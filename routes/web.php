@@ -19,8 +19,12 @@ Route::get('/get-unique-statuses', [CarController::class, 'getUniqueStatuses']);
 Route::post('/save-transaction', [TransactionController::class, 'saveTransaction'])->name('save.transaction');
 Route::get('/get-unavailable-dates/{carId}', [CarController::class, 'getUnavailableDates']);
 
+//     function getTransactionsByUser($userId)
+// {
+//     $transactions = Transaction::where('user_id', $userId)->get();
+//     return response()->json($transactions);
+// }
 
-Route::get('/get-transactions', 'TransactionController@getTransactions');
 
 // web.php
 Route::get('/admin/transactions/{status}', [TransactionController::class, 'getTransactionsByStatus'])->name('transactions.status');
@@ -43,6 +47,12 @@ Route::get('/dashboard', function () {
 
 
 // Route::get('/cars', [CarController::class, 'index'])->middleware(['auth', 'verified'])->name('cars');
+Route::get('/myorder', function () {
+    $user = auth()->user();
+    return view('layouts.myorder', ['user' => $user]);
+})->middleware(['auth', 'verified'])->name('myorder');
+
+Route::get('/get-transactions-by-user/{userId}', [TransactionController::class, 'getTransactionsByUser']);
 
 Route::get('/cars', function () {
     

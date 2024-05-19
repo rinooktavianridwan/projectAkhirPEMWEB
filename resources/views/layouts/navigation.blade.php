@@ -52,6 +52,9 @@
                         <x-nav-link :href="route('cars')" :active="request()->routeIs('cars')">
                             {{ __('Cars') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('myorder')" :active="request()->routeIs('myorder')">
+                            {{ __('My Order') }}
+                        </x-nav-link>
                     </div>
                 @else
                     <!-- ketika belum login -->

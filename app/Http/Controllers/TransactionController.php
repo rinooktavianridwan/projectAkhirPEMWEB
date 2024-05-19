@@ -100,5 +100,15 @@ class TransactionController extends Controller
 
         return response()->json($summary);
     }
+    function getTransactionsByUser($userId)
+    {
+        
+        // kembalikan dalam bentuk array
+        $transactions = Transaction::where('user_id', $userId)->get()->toArray();
+        return response()->json($transactions);
+
+
+        
+    }
      
 }
