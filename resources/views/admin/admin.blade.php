@@ -130,6 +130,52 @@
         </div>
     </div>
 
+    <!-- Modal for View Car -->
+    <div class="modal fade" id="viewcarModal" tabindex="-1" role="dialog" aria-labelledby="carModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="carModalLabel">Car Details</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="carForm" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="name">Nama Mobil</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Kategori</label>
+                            <input type="text" class="form-control" id="category" name="category" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">Gambar</label>
+                            <input type="file" class="form-control" id="image" name="image"
+                                accept="image/png, image/jpeg">
+                            <img id="imagePreview" src="#" alt="Image Preview"
+                                style="display: none; width: 100px; height: auto; margin-top: 10px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Kota</label>
+                            <input type="text" class="form-control" id="city" name="city" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Harga</label>
+                            <input type="text" class="form-control" id="price" name="price" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
@@ -156,9 +202,9 @@
                     <td>${car.status}</td>
                     <td>${car.price}</td>
                     <td>
-                        <button class="btn btn-info" onclick="viewCar(${index})">View</button>
-                        <button class="btn btn-warning" onclick="editCar(${index})">Edit</button>
-                        <button class="btn btn-danger" onclick="deleteCar(${index})">Delete</button>
+                        <button class="btn btn-info" data-car-id="${car.id}" onclick="viewCar(${index}, ${car.id})">View</button>
+                        <button class="btn btn-warning" data-car-id="${car.id}" onclick="editCar(${index}, ${car.id})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteCar(${index})" >Delete</button>
                     </td>
                 </tr>`);
                 });
@@ -214,10 +260,9 @@
             });
 
             // Edit Car Function
-            // Edit Car Function
-            window.editCar = function(index) {
+            window.editCar = function(index, carId) {
                 resetForm(); // Reset form fields before showing the modal
-                let car = cars[index];
+                let car = cars.find(car => car.id === carId);
                 $('#name').val(car.name);
                 $('#category').val(car.category);
                 $('#city').val(car.city);
@@ -234,9 +279,7 @@
                     formData.append('city', $('#city').val());
                     formData.append('price', $('#price').val());
 
-
                     $.ajax({
-
                         url: '/edit-car/' + car.id,
                         method: 'POST',
                         data: formData,
@@ -289,11 +332,28 @@
             };
 
             // View Car Function
-            window.viewCar = function(index) {
-                let car = cars[index];
-                alert(
-                    `Name: ${car.name}\nCategory: ${car.category}\nImage: ${car.image}\nCity: ${car.city}\nStatus: ${car.status}\nPrice: ${car.price}`
-                );
+            window.viewCar = function(index, idCars) {
+                let car = cars.find(car => car.id === idCars);
+                if (car) {
+                    console.log('Car data:', car); // Debugging line
+                    document.getElementById('name').value = car.name;
+                    document.getElementById('category').value = car.category;
+                    document.getElementById('city').value = car.city;
+                    document.getElementById('price').value = car.price;
+
+                    // Handle image preview
+                    if (car.image) {
+                        document.getElementById('imagePreview').src = car.image;
+                        document.getElementById('imagePreview').style.display = 'block';
+                    } else {
+                        document.getElementById('imagePreview').style.display = 'none';
+                    }
+
+                    // Show the modal
+                    $('#viewcarModal').modal('show');
+                } else {
+                    alert('Car not found');
+                }
             };
 
             // Image preview function
@@ -314,7 +374,7 @@
             // Tambahkan event listener untuk input pencarian
             $('#searchInput').on('input', function() {
                 let searchKeyword = $(this).val()
-            .toLowerCase(); // Ambil nilai input pencarian dan ubah menjadi huruf kecil
+                    .toLowerCase(); // Ambil nilai input pencarian dan ubah menjadi huruf kecil
                 let filteredCars = cars.filter(function(car) {
                     // Lakukan filter terhadap data mobil berdasarkan kata kunci pencarian
                     return car.name.toLowerCase().includes(searchKeyword) ||
