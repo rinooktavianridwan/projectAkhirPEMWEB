@@ -69,6 +69,7 @@
                 <tr>
                     <th>Transaction ID</th>
                     <th>Date Order</th>
+                    <th>Start Order</th>
                     <th>Duration</th>
                     <th>Cost</th>
                     <th>Status</th>
@@ -77,6 +78,7 @@
             <tbody>`;
 
             const tableRows = transactions.map(transaction => {
+                let formattedPickup = moment(transaction.pickup_date).format('YYYY-MM-DD');
                 const duration = moment(transaction.return_date).diff(moment(transaction.pickup_date), 'days');
                 const formattedDate = moment(transaction.updated_at).format('YYYY-MM-DD HH:mm:ss');
                 const now = moment();
@@ -97,6 +99,7 @@
             <tr>
                 <td>${transaction.id}</td>
                 <td>${formattedDate}</td>
+                <td>${formattedPickup}</td>
                 <td>${duration} days</td>
                 <td>${formattedCost}</td>
                 <td>${status}</td>
