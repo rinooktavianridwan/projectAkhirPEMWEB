@@ -103,6 +103,7 @@
 
             <div class="transaction-filter">
                 <div>
+                    <button class="btn btn-primary" onclick="loadTransactions('all')">All Orders</button>
                     <button class="btn btn-primary" onclick="loadTransactions('booked')">Booked Orders</button>
                     <button class="btn btn-primary" onclick="loadTransactions('ongoing')">Ongoing Orders</button>
                     <button class="btn btn-primary" onclick="loadTransactions('done')">Completed Orders</button>
@@ -121,7 +122,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
-        let filterStatus = 'booked'; // Variabel global untuk menyimpan status filter
+        let filterStatus = 'all'; // Variabel global untuk menyimpan status filter
 
         function loadSummary() {
             $.ajax({
@@ -152,7 +153,7 @@
                 url: `/admin/transactions/${status}`,
                 method: 'GET',
                 success: function(data) {
-                    renderTransactionTable(data, status);
+                    renderTransactionTable(data);
                 },
                 error: function() {
                     alert('Failed to fetch transactions');
@@ -160,11 +161,12 @@
             });
         }
 
-        function renderTransactionTable(transactions, status) {
+        function renderTransactionTable(transactions) {
             let tableContent = `
+            
                 <div class="order">
                     <div class="head">
-                        <h3>${status.charAt(0).toUpperCase() + status.slice(1)} Orders</h3>
+                        <h3>${filterStatus.charAt(0).toUpperCase() + filterStatus.slice(1)} Orders</h3>
                     </div>
                     <table>
                         <thead>
@@ -177,6 +179,15 @@
                         </thead>
                         <tbody>`;
             transactions.forEach(transaction => {
+                let status;
+                let now = moment(); // Menambahkan deklarasi variabel now di sini
+                if (now.isBefore(moment(transaction.pickup_date))) {
+                    status = 'Booked';
+                } else if (now.isAfter(moment(transaction.return_date))) {
+                    status = 'Done';
+                } else {
+                    status = 'Ongoing';
+                }
                 let duration = moment(transaction.return_date).diff(moment(transaction.pickup_date), 'days');
                 let formattedDate = moment(transaction.updated_at).format('YYYY-MM-DD HH:mm:ss');
                 let formattedPickup = moment(transaction.pickup_date).format('YYYY-MM-DD');
@@ -216,7 +227,8 @@
                                 searchKeyword)) ||
                             transaction.updated_at.toLowerCase().includes(searchKeyword);
                     });
-                    renderTransactionTable(filteredTransactions, filterStatus);
+                    renderTransactionTable(filteredTransactions,
+                    filterStatus); // Hapus parameter yang tidak diperlukan
                 },
                 error: function() {
                     alert('Failed to fetch transactions');

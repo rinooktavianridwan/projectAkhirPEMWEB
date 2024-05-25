@@ -20,6 +20,7 @@
                 My Orders Table
             </div>
             <div class="button-myorder">
+                <button onclick="loadTransactions('all')">All</button>
                 <button onclick="loadTransactions('booked')">Booked</button>
                 <button onclick="loadTransactions('done')">Done</button>
                 <button onclick="loadTransactions('ongoing')">Ongoing</button>
@@ -37,8 +38,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script>
         function loadTransactions(status) {
+            let url;
+            if (status === 'all') {
+                url = `/get-transactions-by-user/{{ $user->id }}`;
+            } else {
+                url = `/get-transactions-by-user/{{ $user->id }}/${status}`;
+            }
             $.ajax({
-                url: `/get-transactions-by-user/{{ $user->id }}/${status}`,
+                url: url,
                 type: 'GET',
                 success: function(response) {
                     console.log('Response received:', response);
@@ -53,6 +60,7 @@
                 }
             });
         }
+
 
         function renderTransactionTable(transactions) {
             const tableHeader = `
@@ -103,8 +111,8 @@
             loadTransactions('booked'); // Load default transactions on page load
         });
     </script>
-        <!--Footer -->
-        @include('layouts.footer')
+    <!--Footer -->
+    @include('layouts.footer')
     <!-- /Footer-->
 </body>
 

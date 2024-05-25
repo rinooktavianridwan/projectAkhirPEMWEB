@@ -57,6 +57,9 @@ class TransactionController extends Controller
                     return now() >= $transaction->return_date;
                 });
                 break;
+            case 'all':
+                $filteredTransactions = $transactions;
+                break;
             default:
                 $filteredTransactions = collect();
                 break;
