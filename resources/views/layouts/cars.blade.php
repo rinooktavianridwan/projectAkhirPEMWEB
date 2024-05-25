@@ -175,7 +175,7 @@
                         </div>
                         <div class="form-group">
                             <label for="returnDate">Tanggal Pengembalian:</label>
-                            <input type="date" id="returnDate" class="form-control" required>
+                            <input type="text" id="returnDate" class="form-control" required>
                         </div>
                     </form>
                 </div>
@@ -208,7 +208,7 @@
             </div>
         </div>
     </div>
-    
+
     <style>
         .ui-datepicker {
             width: 300px;
@@ -412,11 +412,31 @@
                         beforeShowDay: function(date) {
                             var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
                             if (specialDates[string]) {
-                                return [true, specialDates[string], 'Tidak Tersedia'];
+                                return [false, specialDates[string], 'Tidak Tersedia']; // Ubah nilai pertama menjadi false
                             } else {
                                 return [true, '', ''];
                             }
                         },
+                        onSelect: function(dateText) {
+                            if (specialDates[dateText]) {
+                                alert('Tanggal tidak tersedia.');
+                            }
+                        }
+                    });
+                    $("#returnDate").datepicker({
+                        beforeShowDay: function(date) {
+                            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                            if (specialDates[string]) {
+                                return [false, specialDates[string], 'Tidak Tersedia']; // Ubah nilai pertama menjadi false
+                            } else {
+                                return [true, '', ''];
+                            }
+                        },
+                        onSelect: function(dateText) {
+                            if (specialDates[dateText]) {
+                                alert('Tanggal tidak tersedia.');
+                            }
+                        }
                     });
                 },
                 error: function() {
@@ -453,12 +473,9 @@
             }
 
             // Fetch the disabled dates then proceed with the cost calculation
-            $.get('/calendar-data/' + carId, function(disabledDates) {
-                // Now perform the checks with disabledDates loaded
-                if (disabledDates.includes(pickupDate) || disabledDates.includes(returnDate)) {
-                    alert('Tanggal pengambilan atau pengembalian tidak tersedia.');
-                    return;
-                }
+            $.get('/calendar-data/' + carId, function(data) {
+                var disabledDates = data;
+
 
                 // Continue with your cost calculation here
                 const msPerDay = 86400000;
