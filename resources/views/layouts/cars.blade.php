@@ -9,6 +9,13 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -162,7 +169,9 @@
                     <form id="transactionForm">
                         <div class="form-group">
                             <label for="pickupDate">Tanggal Pengambilan:</label>
-                            <input type="date" id="pickupDate" class="form-control" required>
+                            <input type="text" id="pickupDate" class="form-control" required>
+
+
                         </div>
                         <div class="form-group">
                             <label for="returnDate">Tanggal Pengembalian:</label>
@@ -199,10 +208,24 @@
             </div>
         </div>
     </div>
+    
+    <style>
+        .ui-datepicker {
+            width: 300px;
+            /* Set a fixed width */
+            height: auto;
+            /* Allow the height to adjust based on content */
+            padding: 10px;
+        }
 
+        .red {
+            background-color: #FF6347 !important;
+            /* Tomato */
+            color: white;
+            /* Change text color to white for better visibility */
+        }
+    </style>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
             let cars = [];
@@ -373,12 +396,33 @@
                 $('#notificationModal').modal('show');
                 return;
             }
-            return true ;
+            return true;
         }
 
 
         function openTransactionModal() {
             // Pastikan pengguna sudah login
+            var carId = document.getElementById('id').innerText;
+            $.ajax({
+                url: '/calendar-data/' + carId, // Sesuaikan endpoint jika perlu
+                method: 'GET',
+                success: function(data) {
+                    var specialDates = data;
+                    $("#pickupDate").datepicker({
+                        beforeShowDay: function(date) {
+                            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                            if (specialDates[string]) {
+                                return [true, specialDates[string], 'Tidak Tersedia'];
+                            } else {
+                                return [true, '', ''];
+                            }
+                        },
+                    });
+                },
+                error: function() {
+                    alert('Data tanggal tidak dapat dimuat.');
+                }
+            });
             if (!userLoggedIn()) {
                 alert("Anda harus login terlebih dahulu untuk melakukan pemesanan.");
                 return;
@@ -386,79 +430,79 @@
             if (kelengkapanData()) {
                 $('#transactionModal').modal('show');
             }
-            
-            
+
+
         }
 
         function calculateCost() {
-    const carId = document.getElementById('id').innerText; // Make sure this is getting the correct ID
-    const pickupDate = document.getElementById('pickupDate').value;
-    const returnDate = document.getElementById('returnDate').value;
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to midnight today
+            const carId = document.getElementById('id').innerText; // Make sure this is getting the correct ID
+            const pickupDate = document.getElementById('pickupDate').value;
+            const returnDate = document.getElementById('returnDate').value;
+            const today = new Date();
+            today.setHours(0, 0, 0, 0); // Set to midnight today
 
-    // Checks for date logic before the AJAX call
-    if (!pickupDate || !returnDate || new Date(pickupDate) >= new Date(returnDate)) {
-        alert("Tanggal pengembalian harus setelah tanggal pengambilan.");
-        return;
-    }
+            // Checks for date logic before the AJAX call
+            if (!pickupDate || !returnDate || new Date(pickupDate) >= new Date(returnDate)) {
+                alert("Tanggal pengembalian harus setelah tanggal pengambilan.");
+                return;
+            }
 
-    if (new Date(pickupDate) < today) {
-        alert("Tanggal pengambilan harus setelah tanggal hari ini.");
-        return;
-    }
+            if (new Date(pickupDate) < today) {
+                alert("Tanggal pengambilan harus setelah tanggal hari ini.");
+                return;
+            }
 
-    // Fetch the disabled dates then proceed with the cost calculation
-    $.get('/calendar-data/' + carId, function(disabledDates) {
-        // Now perform the checks with disabledDates loaded
-        if (disabledDates.includes(pickupDate) || disabledDates.includes(returnDate)) {
-            alert('Tanggal pengambilan atau pengembalian tidak tersedia.');
-            return;
+            // Fetch the disabled dates then proceed with the cost calculation
+            $.get('/calendar-data/' + carId, function(disabledDates) {
+                // Now perform the checks with disabledDates loaded
+                if (disabledDates.includes(pickupDate) || disabledDates.includes(returnDate)) {
+                    alert('Tanggal pengambilan atau pengembalian tidak tersedia.');
+                    return;
+                }
+
+                // Continue with your cost calculation here
+                const msPerDay = 86400000;
+                const start = new Date(pickupDate);
+                const end = new Date(returnDate);
+                const duration = Math.ceil((end - start) / msPerDay);
+                const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace('.', ''));
+                const totalCost = duration * costPerDay;
+
+                if (confirm(`Biaya total pemesanan adalah Rp${totalCost.toLocaleString('id-ID')}. Lanjutkan transaksi?`)) {
+                    performTransaction(carId, pickupDate, returnDate, totalCost);
+                } else {
+                    alert("Transaksi dibatalkan.");
+                }
+            });
         }
 
-        // Continue with your cost calculation here
-        const msPerDay = 86400000;
-        const start = new Date(pickupDate);
-        const end = new Date(returnDate);
-        const duration = Math.ceil((end - start) / msPerDay);
-        const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace('.', ''));
-        const totalCost = duration * costPerDay;
+        function performTransaction(carId, pickupDate, returnDate, totalCost) {
+            let formData = new FormData();
+            formData.append('user_id', '{{ $user->id }}');
+            formData.append('car_id', carId);
+            formData.append('pickup_date', pickupDate);
+            formData.append('return_date', returnDate);
+            formData.append('transaction_value', totalCost);
 
-        if (confirm(`Biaya total pemesanan adalah Rp${totalCost.toLocaleString('id-ID')}. Lanjutkan transaksi?`)) {
-            performTransaction(carId, pickupDate, returnDate, totalCost);
-        } else {
-            alert("Transaksi dibatalkan.");
+            formData.append('_token', '{{ csrf_token() }}'); // CSRF token addition
+
+            $.ajax({
+                url: '/transactions',
+                method: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(data) {
+                    alert("Pemesanan berhasil!");
+                    $('#transactionModal').modal('hide');
+                    location.reload();
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error submitting transaction: ", status, error);
+                    alert("Terjadi kesalahan saat melakukan pemesanan.");
+                }
+            });
         }
-    });
-}
-
-function performTransaction(carId, pickupDate, returnDate, totalCost) {
-    let formData = new FormData();
-    formData.append('user_id', '{{ $user->id }}');
-    formData.append('car_id', carId);
-    formData.append('pickup_date', pickupDate);
-    formData.append('return_date', returnDate);
-    formData.append('transaction_value', totalCost);
-
-    formData.append('_token', '{{ csrf_token() }}'); // CSRF token addition
-
-    $.ajax({
-        url: '/transactions',
-        method: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function(data) {
-            alert("Pemesanan berhasil!");
-            $('#transactionModal').modal('hide');
-            location.reload();
-        },
-        error: function(xhr, status, error) {
-            console.error("Error submitting transaction: ", status, error);
-            alert("Terjadi kesalahan saat melakukan pemesanan.");
-        }
-    });
-}
 
 
         function userLoggedIn() {
