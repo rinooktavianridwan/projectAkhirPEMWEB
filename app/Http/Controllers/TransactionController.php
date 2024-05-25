@@ -141,15 +141,17 @@ class TransactionController extends Controller
         $transactions = Transaction::where('car_id', $car_id)->get();
         $unavailableDates = [];
 
+        
         foreach ($transactions as $transaction) {
             $start = Carbon::parse($transaction->pickup_date);
             $end = Carbon::parse($transaction->return_date);
             for ($date = $start; $date->lte($end); $date->addDay()) {
-                $unavailableDates[] = $date->format('Y-m-d');
+                $unavailableDates[$date->format('Y-m-d')] = "red";
             }
         }
-
+        
         return response()->json($unavailableDates);
+        
     }
 
     
