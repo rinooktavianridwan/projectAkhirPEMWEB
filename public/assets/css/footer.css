@@ -4,7 +4,7 @@
     width: 100%;
     height: fit-content;
     background: #f3edc8;
-    padding: 30px;
+    padding: 40px;
     border-top-left-radius: 125;
     font-size: 13px;
     line-height: 20px;
@@ -33,6 +33,15 @@
     flex-direction: column;
     flex-wrap: wrap;
     max-height: 60px;
+}
+.list-cekFooter-gambar {
+    width: 200px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: 60px;
+    /* tempel atas */
+    margin-top: -70px;
 }
 
 .link-footer:hover{

@@ -234,8 +234,8 @@ body {
 }
 .red {
     color: #f44336;
-    font-size: 22px;
-    display: inline-block;
+    /* font-size: 22px;
+    display: inline-block; */
     margin: 0 5px;
 }
 @media screen and (max-width: 991px) {

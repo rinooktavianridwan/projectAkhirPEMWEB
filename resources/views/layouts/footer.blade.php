@@ -18,6 +18,12 @@
           <a href="https://www.whatsapp.com/" target="_blank" class="link-footer">Whatsapp</a>
       </div>
   </div>
+    <div class="row-footer-rental">
+        <h1>Official Partnership With :</h1>
+        <div class="list-cekFooter-gambar">
+            <img src="{{ asset('images/gaspoll.png') }}" alt="">
+        </div>
+    </div>
   <div class="row-footer-rental">
       <h1>
           Speedy Car Renting Service

@@ -404,39 +404,27 @@
             // Pastikan pengguna sudah login
             var carId = document.getElementById('id').innerText;
             $.ajax({
-                url: '/calendar-data/' + carId, // Sesuaikan endpoint jika perlu
+                url: '/calendar-data/' + carId,
                 method: 'GET',
                 success: function(data) {
-                    var specialDates = data;
-                    $("#pickupDate").datepicker({
-                        beforeShowDay: function(date) {
-                            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                            if (specialDates[string]) {
-                                return [false, specialDates[string], 'Tidak Tersedia']; // Ubah nilai pertama menjadi false
-                            } else {
-                                return [true, '', ''];
-                            }
-                        },
-                        onSelect: function(dateText) {
-                            if (specialDates[dateText]) {
-                                alert('Tanggal tidak tersedia.');
-                            }
+                    var beforeShowDayFunc = function(date) {
+                        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+                        if (data[string]) {
+                            return [false, data[string], 'Tidak Tersedia'];
+                        } else {
+                            return [true, '', ''];
                         }
-                    });
-                    $("#returnDate").datepicker({
-                        beforeShowDay: function(date) {
-                            var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                            if (specialDates[string]) {
-                                return [false, specialDates[string], 'Tidak Tersedia']; // Ubah nilai pertama menjadi false
-                            } else {
-                                return [true, '', ''];
-                            }
-                        },
-                        onSelect: function(dateText) {
-                            if (specialDates[dateText]) {
-                                alert('Tanggal tidak tersedia.');
-                            }
+                    };
+
+                    var onSelectFunc = function(dateText) {
+                        if (data[dateText]) {
+                            alert('Tanggal tidak tersedia.');
                         }
+                    };
+
+                    $("#pickupDate, #returnDate").datepicker({
+                        beforeShowDay: beforeShowDayFunc,
+                        onSelect: onSelectFunc
                     });
                 },
                 error: function() {
