@@ -225,7 +225,8 @@
                             transaction.user.name.toLowerCase().includes(searchKeyword) ||
                             (transaction.user.phone && transaction.user.phone.toLowerCase().includes(
                                 searchKeyword)) ||
-                            transaction.updated_at.toLowerCase().includes(searchKeyword);
+                            transaction.updated_at.toLowerCase().includes(searchKeyword)||
+                            transaction.pickup_date.toLowerCase().includes(searchKeyword);
                     });
                     renderTransactionTable(filteredTransactions,
                     filterStatus); // Hapus parameter yang tidak diperlukan
