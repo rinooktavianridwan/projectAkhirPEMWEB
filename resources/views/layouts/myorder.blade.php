@@ -108,7 +108,7 @@
         }
 
         $(document).ready(function() {
-            loadTransactions('booked'); // Load default transactions on page load
+            loadTransactions('all'); // Load default transactions on page load
         });
     </script>
     <!--Footer -->
