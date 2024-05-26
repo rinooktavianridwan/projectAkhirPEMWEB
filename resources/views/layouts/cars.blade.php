@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-
+    <link rel="stylesheet" href="assets/css/footer.css">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -514,6 +514,7 @@
             return '{{ $user->id }}' !== '';
         }
     </script>
+    @include('layouts.footer')
 </body>
 
 </html>
