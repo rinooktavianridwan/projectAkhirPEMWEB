@@ -20,12 +20,11 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url("/images/logo.svg");
+    background-image: url("/images/logoHome.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    opacity: 0.5; /* Sesuaikan nilai ini untuk transparansi yang diinginkan */
-    background-color: rgba(213, 163, 45);
+    background-color: #ead196;
 }
 
 .banner-section > * {

@@ -93,6 +93,13 @@
                     <p><strong>Kota:</strong> <span id="carCity"></span></p>
                     <p><strong>Status:</strong> <span id="carStatus"></span></p>
                     <p><strong>Harga:</strong> <span id="carPrice"></span></p>
+
+                    <!-- ketika user keluar dari tampilan model maka page di reload -->
+                    <script>
+                        $('#carModal').on('hidden.bs.modal', function() {
+                            location.reload();
+                        });
+                    </script>
                 </div>
                 <div class="modal-footer modal-bawah">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -398,7 +405,21 @@
             }
             return true;
         }
+        function isDateRangeAvailable(startDate, endDate, data) {
+            var currentDate = new Date(startDate);
 
+            while (currentDate <= endDate) {
+                var dateString = jQuery.datepicker.formatDate('yy-mm-dd', currentDate);
+
+                if (data[dateString]) {
+                    return false;
+                }
+
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+
+            return true;
+        }
 
         function openTransactionModal() {
             // Pastikan pengguna sudah login
@@ -409,14 +430,26 @@
                 success: function(data) {
                     var beforeShowDayFunc = function(date) {
                         var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
-                        if (data[string]) {
-                            return [false, data[string], 'Tidak Tersedia'];
+                        var today = new Date();
+                        today.setHours(0,0,0,0); // set waktu hari ini ke tengah malam
+
+                        if (data[string] || date < today) {
+                            return [false, data[string] ? data[string] : '', 'Tidak Tersedia'];
                         } else {
                             return [true, '', ''];
                         }
                     };
 
+
                     var onSelectFunc = function(dateText) {
+                        var startDate = $("#pickupDate").datepicker('getDate');
+                        var endDate = $("#returnDate").datepicker('getDate');
+
+                        if (!isDateRangeAvailable(startDate, endDate, data)) {
+                            alert('Ada tanggal dalam rentang yang Anda pilih yang tidak tersedia.');
+                            $("#pickupDate").val('');
+                            $("#returnDate").val('');
+                        }
                         if (data[dateText]) {
                             alert('Tanggal tidak tersedia.');
                         }
@@ -443,6 +476,7 @@
         }
 
         function calculateCost() {
+            
             const carId = document.getElementById('id').innerText; // Make sure this is getting the correct ID
             const pickupDate = document.getElementById('pickupDate').value;
             const returnDate = document.getElementById('returnDate').value;
@@ -462,16 +496,14 @@
 
             // Fetch the disabled dates then proceed with the cost calculation
             $.get('/calendar-data/' + carId, function(data) {
+                
                 var disabledDates = data;
-
-
-                // Continue with your cost calculation here
                 const msPerDay = 86400000;
                 const start = new Date(pickupDate);
                 const end = new Date(returnDate);
                 const duration = Math.ceil((end - start) / msPerDay);
                 const costPerDay = parseFloat(document.getElementById('carPrice').innerText.replace('Rp', '').replace('.', ''));
-                const totalCost = duration * costPerDay;
+                const totalCost = (duration * costPerDay)/100;
 
                 if (confirm(`Biaya total pemesanan adalah Rp${totalCost.toLocaleString('id-ID')}. Lanjutkan transaksi?`)) {
                     performTransaction(carId, pickupDate, returnDate, totalCost);
