@@ -24,7 +24,7 @@
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('layouts.navigation')
-    <title>Document</title>
+    <title>Car Rental</title>
 </head>
 
 <body class="font-sans antialiased">

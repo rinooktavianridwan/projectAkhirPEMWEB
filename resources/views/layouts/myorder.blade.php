@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" href="assets/css/myorder.css">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <title>My Orders</title>
+    <title>Car Rental</title>
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('layouts.navigation')
