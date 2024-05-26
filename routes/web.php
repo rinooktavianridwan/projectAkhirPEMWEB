@@ -141,12 +141,7 @@ route::post('/save-transaction', function () {
 })->name('save.transaction')->middleware(['auth', 'verified']);
 
 route::post('/transactions', function () {
-    $isAdmin = \App\Models\Admin::where('email', Auth::user()->email)->first();;
-    if ($isAdmin) {
-        return app()->call('App\Http\Controllers\TransactionController@store');
-    } else {
-        return redirect()->route('dashboard');
-    }
+    return app()->call('App\Http\Controllers\TransactionController@store');
 })->middleware(['auth', 'verified']);
 
 Route::middleware('auth')->group(function () {
