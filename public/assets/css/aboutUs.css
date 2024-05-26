@@ -1,69 +1,244 @@
 body {
-  font-family: Arial, sans-serif;
-  background-color: #EAD196; /* Cream background */
-  margin: 0;
-  padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ead196; /* Cream background */
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-  max-width: 800px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #fff; /* White background for container */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff; /* White background for container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 h1 {
-  text-align: center;
-  color: #a31f34;
-  margin-bottom: 20px;
+    text-align: center;
+    color: #a31f34;
+    margin-bottom: 20px;
 }
 
 .cards {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
 .card {
-  background-color: #fff; /* White background for cards */
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  width: 48%;
+    background-color: #fff; /* White background for cards */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 48%;
 }
 
 .card h2 {
-  color: #5a5a5a;
-  margin-top: 0;
+    color: #5a5a5a;
+    margin-top: 0;
 }
 
 .card p {
-  text-align: justify;
-  text-justify: inter-word;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 .reach-out {
-  background-color: #fff; /* White background for reach-out section */
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  text-align: center;
+    background-color: #fff; /* White background for reach-out section */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 .reach-out h2 {
-  color: #5a5a5a;
-  margin-top: 0;
+    color: #5a5a5a;
+    margin-top: 0;
 }
 
 .reach-out p {
-  text-align: justify;
-  text-justify: inter-word;
+    text-align: justify;
+    text-justify: inter-word;
 }
 
 p {
-  color: #333;
-  line-height: 1.6;
-  margin: 10px 0;
+    color: #333;
+    line-height: 1.6;
+    margin: 10px 0;
+}
+
+.container-ourteam {
+    max-width: 1300px;
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff; /* White background for container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+.row-ourteam {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 20px;
+}
+.our-team {
+    width: 300px;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+.our-team img {
+    width: 100%;
+    height: auto;
+}
+.our-team .team-content-ourteam {
+    width: 100%;
+    background: #3f2b4f;
+    color: #fff;
+    padding: 15px 0 10px 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    transition: all 0.3s ease 0s;
+}
+.our-team:hover .team-content-ourteam {
+    padding-bottom: 40px;
+}
+.our-team .team-content-ourteam:before,
+.our-team .team-content-ourteam:after {
+    content: "";
+    width: 60%;
+    height: 30px;
+    background: #3f2b4f;
+    position: absolute;
+    top: -18px;
+    transform: rotate(15deg);
+    z-index: -1;
+}
+.our-team .team-content-ourteam:before {
+    left: -3%;
+}
+.our-team .team-content-ourteam:after {
+    right: -3%;
+    transform: rotate(-15deg);
+}
+.our-team .title-ourteam {
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: capitalize;
+    margin: 0 0 7px 0;
+    position: relative;
+}
+.our-team .title-ourteam:before,
+.our-team .title-ourteam:after {
+    content: "";
+    width: 7px;
+    height: 93px;
+    background: #ff5543;
+    position: absolute;
+    top: -78px;
+    z-index: -2;
+    transform: rotate(-74deg);
+}
+.our-team .title-ourteam:before {
+    left: 32%;
+}
+.our-team .title-ourteam:after {
+    right: 32%;
+    transform: rotate(74deg);
+}
+.our-team .post-ourteam {
+    display: block;
+    font-size: 13px;
+    text-transform: capitalize;
+    margin-bottom: 8px;
+}
+.our-team .social-links-ourteam {
+    list-style: none;
+    padding: 0 0 15px 0;
+    margin: 0;
+    position: absolute;
+    bottom: -40px;
+    right: 0;
+    left: 0;
+    transition: all 0.5s ease 0s;
+}
+.our-team:hover .social-links-ourteam {
+    bottom: 0;
+}
+.our-team .social-links-ourteam li {
+    display: inline-block;
+}
+.our-team .social-links-ourteam li a {
+    display: block;
+    font-size: 16px;
+    color: #aad6e1;
+    margin-right: 6px;
+    transition: all 0.5s ease 0s;
+}
+.our-team .social-links-ourteam li:last-child a {
+    margin-right: 0;
+}
+.our-team .social-links-ourteam li a:hover {
+    color: #ff5543;
+}
+@media only screen and (max-width: 990px) {
+    .our-team {
+        margin-bottom: 30px;
+    }
+    .our-team .team-content:before,
+    .our-team .team-content:after {
+        height: 50px;
+        top: -24px;
+    }
+    .our-team .title:before,
+    .our-team .title:after {
+        top: -85px;
+        height: 102px;
+    }
+    .our-team .title:before {
+        left: 35%;
+    }
+    .our-team .title:after {
+        right: 35%;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .our-team .team-content:before,
+    .our-team .team-content:after {
+        height: 75px;
+    }
+    .our-team .team-content:before {
+        transform: rotate(8deg);
+    }
+    .our-team .team-content:after {
+        transform: rotate(-8deg);
+    }
+    .our-team .title:before,
+    .our-team .title:after {
+        width: 10px;
+        top: -78px;
+        height: 102px;
+    }
+    .our-team .title:before {
+        left: 42.5%;
+        transform: rotate(-82deg);
+    }
+    .our-team .title:after {
+        right: 42.5%;
+        transform: rotate(82deg);
+    }
+}
+@media only screen and (max-width: 480px) {
+    .our-team .title:before,
+    .our-team .title:after {
+        top: -83px;
+    }
 }
